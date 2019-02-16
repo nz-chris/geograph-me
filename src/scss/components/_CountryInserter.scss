@@ -1,0 +1,13 @@
+.country-inserter {
+    min-height: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    &__lower {
+        flex-grow: 1;
+
+        background: linear-gradient(to bottom, $color-ocean, black);
+    }
+}

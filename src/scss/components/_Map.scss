@@ -1,0 +1,82 @@
+.map {
+    position: relative;
+    background: black;
+
+    &__svg, &__noise-overlay {
+        width: 100%;
+        height: auto;
+        max-height: calc(100vh - #{$min-interact-able});
+
+        display: block;
+        user-select: none;
+    }
+
+    &__svg {
+        .oceanxx {
+            fill: url(#oceanGradient);
+        }
+
+        .landxx, .limitxx {
+            fill: url(#landGradient);
+            stroke: url(#oceanGradient);
+            stroke-width: $stroke-width;
+            fill-rule: evenodd;
+        }
+
+        .limitxx {
+            stroke-dasharray: 1;
+        }
+
+        .coastxx {
+            stroke-width: 0;
+        }
+    }
+
+    &__land-gradient-stop {
+        &--snow {
+            stop-color: white;
+        }
+
+        &--land {
+            stop-color: $color-land;
+        }
+
+        &--desert {
+            stop-color: $color-desert;
+        }
+    }
+
+    &__ocean-gradient-stop {
+        &--ocean-cold {
+            stop-color: $color-ocean-cold;
+        }
+        &--ocean {
+            stop-color: $color-ocean;
+        }
+        &--ocean-warm {
+            stop-color: $color-ocean-warm;
+        }
+    }
+
+    #aq, #gl {
+        fill: white;
+    }
+
+    #au {
+        fill: url(#auGradient);
+    }
+
+    &__noise-overlay {
+        position: absolute;
+        top: 0;
+
+        #noised {
+            opacity: 1;
+        }
+        #textured {
+            opacity: 0.5;
+        }
+
+        pointer-events: none;
+    }
+}

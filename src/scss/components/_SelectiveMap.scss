@@ -1,0 +1,41 @@
+//.selective-map {
+//    $this: &;
+//    $land-selector: '#{$this} &, .landxx, .limitxx, *';
+//
+//    #ocean {
+//        display: none;
+//    }
+//
+//    &__land {
+//        transition: $transition-all;
+//
+//        #{$land-selector} {
+//            fill: transparent;
+//            stroke: $color-ocean;
+//            stroke-width: $stroke-width;
+//            fill-rule: evenodd;
+//        }
+//
+//        &--invisible {
+//            #{$land-selector} {
+//                fill: $color-ocean;
+//                stroke: $color-ocean;
+//                stroke-width: $stroke-width * 3;
+//                fill-rule: evenodd;
+//            }
+//
+//            pointer-events: none;
+//        }
+//    }
+//}
+//
+//@keyframes example {
+//    0% {
+//        stroke: red;
+//        stroke-width: $stroke-width;
+//    }
+//    100% {
+//        stroke: red;
+//        stroke-width: 10;
+//    }
+//}
