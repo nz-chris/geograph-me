@@ -1,25 +1,46 @@
 // Colors
-$color-ocean-cold: #2866b1;
-$color-ocean: #114cb1;
-$color-ocean-warm: #2866b1;
-$color-land: #6ad745;
-$color-desert: #ece877;
-
-// Z Index
-$z-top: 90000;
-$z-higher: 500;
-$z-high: 400;
-$z-medium-high: 300;
-$z-medium: 200;
-$z-low-medium: 100;
-$z-low: 0;
-$z-bottom: -100;
-
-// Animations
-$transition-all: all 0.3s ease-in-out;
+    // Named
+        $color-froly: #f47174;
+        $color-cod-grey: #0f0f0f;
+        $color-mine-shaft: #202020;
+        $color-tundora: #454545;
+        $color-nobel: #b7b7b7;
+        $color-gallery: #eeeeee;
+    // Purpose
+        $color-box-shadow: black;
+        $color-negative-button: $color-froly;
+        // Map
+            $color-ocean-cold: #2866b1;
+            $color-ocean: #114cb1;
+            $color-ocean-warm: #2866b1;
+            $color-land: #028b42;
+            $color-desert: #c8c18f;
 
 // Dimensions
-$min-interact-able: 44px;
+    $min-interact-able: 44px;
+    $padding: 15px;
+    $padding-slimmer: 10px;
+
+// Cosmetics
+    $box-shadow: 2px 2px 4px $color-box-shadow;
+    $border-radius: 18px;
+    $border-radius-subtle: 4px;
+
+// Z Index
+    $z-top: 90000;
+    $z-higher: 500;
+    $z-high: 400;
+    $z-medium-high: 300;
+    $z-medium: 200;
+    $z-low-medium: 100;
+    $z-low: 0;
+    $z-bottom: -100;
+
+// Animations
+    $transition: 0.3s ease-in-out;
+    $transition-faster: 0.15s ease-in-out;
+    $transition-all: all $transition;
+    $transition-all-faster: all $transition-faster;
 
 // SVG
-$stroke-width: 1;
+    $stroke-width: 1;

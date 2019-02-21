@@ -20,7 +20,6 @@ class CountryInput extends Component {
 
     onBlur() {
         this.props.onSubmit(this.inputRef.current.value);
-        this.inputRef.current.focus();
     }
 
     render() {
@@ -32,7 +31,7 @@ class CountryInput extends Component {
                    placeholder={this.props.placeholder}
                    ref={this.inputRef}
                    onBlur={this.onBlur}
-                   onKeyPress={(e) => {e.key === 'Enter' && this.onBlur()}}
+                   onKeyPress={(e) => {e.key === 'Enter' && this.props.onSubmit(this.inputRef.current.value)}}
             />
         );
     }

@@ -1,0 +1,24 @@
+[tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[tooltip]:before {
+    content: attr(tooltip);
+    position: absolute;
+    top: 50%;
+    pointer-events: none;
+    padding: $padding-slimmer;
+    z-index: $z-top;
+    opacity: 0;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
+    transition: $transition-all-faster;
+}
+
+[tooltip]:hover:before {
+    top: 100%;
+    opacity: 1;
+    background: $color-cod-grey;
+}

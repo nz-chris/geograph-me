@@ -20,9 +20,8 @@ class SelectiveMap extends Component {
     }
     
     setClasses() {
-        if (!this.svg) {
-            return;
-        }
+        if (!this.svg) return;
+
         const lowerCaseCountriesShown = this.props.countriesShown.map(function(item) {
             return item.toLowerCase();
         });
@@ -45,7 +44,6 @@ class SelectiveMap extends Component {
                          this.setClasses();
                      }
                  }}
-                 noiseOverlay={true}
             />
         );
     }

@@ -5,9 +5,39 @@
     display: flex;
     flex-direction: column;
 
+    background-color: $color-mine-shaft;
+
+    &__upper {
+        width: 100%;
+        min-height: $min-interact-able;
+        padding-top: $padding;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        > * {
+            &:not(:last-child) {
+                margin-right: $padding-slimmer;
+            }
+
+            &:not(input) {
+                width: 120px;
+            }
+        }
+    }
+
+    &__progress {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: $color-tundora;
+        border-radius: $border-radius-subtle;
+    }
+
     &__lower {
         flex-grow: 1;
 
-        background: linear-gradient(to bottom, $color-ocean, black);
+        background: linear-gradient(to bottom, $color-mine-shaft, black);
     }
 }

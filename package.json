@@ -1,5 +1,5 @@
 {
-  "name": "untitled",
+  "name": "map-fill-quiz",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,7 +9,8 @@
     "node-sass": "^4.11.0",
     "classnames": "^2.2.6",
     "react-svg": "^7.2.6",
-    "world-countries": "^2.1.0"
+    "world-countries": "^2.1.0",
+    "leaflet": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,5 +26,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "terser": "^3.14.1"
+  }
 }

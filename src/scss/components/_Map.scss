@@ -1,11 +1,8 @@
 .map {
-    position: relative;
-    background: black;
-
-    &__svg, &__noise-overlay {
+    &__svg {
         width: 100%;
         height: auto;
-        max-height: calc(100vh - #{$min-interact-able});
+        max-height: calc(100vh - #{$min-interact-able + $padding});
 
         display: block;
         user-select: none;
@@ -58,25 +55,13 @@
         }
     }
 
+    // Antarctica and Greenland.
     #aq, #gl {
         fill: white;
     }
 
-    #au {
+    // Mainland Australia.
+    #path3348 {
         fill: url(#auGradient);
-    }
-
-    &__noise-overlay {
-        position: absolute;
-        top: 0;
-
-        #noised {
-            opacity: 1;
-        }
-        #textured {
-            opacity: 0.5;
-        }
-
-        pointer-events: none;
     }
 }

@@ -1,10 +1,19 @@
 .country-input {
+    width: calc(50% + 100px);
+    max-width: 100%;
     min-height: $min-interact-able;
-
     padding: 0 44px;
 
+    background: $color-mine-shaft;
     border: none;
+    border-bottom: 1px $color-nobel solid;
     outline: none;
 
-    font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
+
+    &::placeholder {
+        color: $color-nobel;
+        font-style: italic;
+        font-weight: 300;
+    }
 }

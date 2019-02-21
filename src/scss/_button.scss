@@ -1,0 +1,20 @@
+button {
+    min-height: 44px;
+    padding-top: 0;
+    background: none;
+    border: 1.5px $color-negative-button solid;
+    outline: none;
+    border-radius: $border-radius-subtle;
+    cursor: pointer;
+    transition: $transition-all-faster;
+
+    &:hover {
+        border-width: 3px;
+    }
+
+    &:active {
+        transition: none;
+        padding-top: 3px;
+        border-top-width: 4px;
+    }
+}

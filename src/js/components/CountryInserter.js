@@ -9,7 +9,6 @@ class CountryInserter extends Component {
     constructor(props) {
         super(props);
 
-
         const storedCountriesShown = localStorage.getItem('countriesShown');
         this.state = {
             countriesShown: storedCountriesShown ? storedCountriesShown.split(',') : [],
@@ -18,47 +17,21 @@ class CountryInserter extends Component {
         this.rootClass = 'country-inserter';
         this.correct = false;
 
-        this.independtsLength = 0;
-        this.idNameMap = {};
         this.nameIdMap = {};
         for (const country of countries) {
             if (country.independent) {
-                this.idNameMap[country.cca2] = country.name.common;
-                this.independtsLength++;
                 this.nameIdMap[country.name.common.toLowerCase()] = country.cca2;
             }
         }
-        //TODO: warn if the map above doesn't make sense with country-id-title-map.json (from SVG)
+
 
         this.onCountrySubmit = this.onCountrySubmit.bind(this);
-        this.onDblClick = this.onDblClick.bind(this);
-
-        this.all = false;
-    }
-
-    componentDidMount() {
-        window.addEventListener('dblclick', this.onDblClick)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('dblclick', this.onDblClick)
-    }
-
-    onDblClick() {
-        if (this.all) {
-            this.setState({countriesShown: []});
-            localStorage.setItem('countriesShown', '');
-            this.all = false;
-            console.log('cleared');
-        } else {
-            this.setState({countriesShown: Object.keys(this.idNameMap)});
-            localStorage.setItem('countriesShown', Object.keys(this.idNameMap).join(','));
-            this.all = true;
-            console.log('haxxor');
-        }
+        this.clearProgress = this.clearProgress.bind(this);
     }
 
     onCountrySubmit(value) {
+        if (!value) return;
+
         value = value.toLowerCase();
         if (this.nameIdMap.hasOwnProperty(value)) {
             const id = this.nameIdMap[value];
@@ -72,20 +45,34 @@ class CountryInserter extends Component {
         }
     }
 
+    clearProgress() {
+        this.setState({countriesShown: []});
+        localStorage.setItem('countriesShown', '');
+        this.forceUpdate(this.forceUpdate);
+    }
+
     render() {
         return (
             <div className={this.rootClass}>
-                <CountryInput placeholder={'Enter a country name'}
-                              onSubmit={this.onCountrySubmit}
-                              clear={(() => {
-                                  if (this.correct) {
-                                      this.correct = false;
-                                      return true;
-                                  } else {
-                                      return false;
-                                  }
-                              })()}
-                />
+                <div className={this.rootClass + '__upper'}>
+                    <div className={this.rootClass + '__progress'}
+                         tooltip="Independent countries on the map"
+                    >
+                        {this.state.countriesShown.length + ' / ' + Object.keys(this.nameIdMap).length}
+                    </div>
+                    <CountryInput placeholder={'Enter a country name'}
+                                  onSubmit={this.onCountrySubmit}
+                                  clear={(() => {
+                                      if (this.correct) {
+                                          this.correct = false;
+                                          return true;
+                                      } else {
+                                          return false;
+                                      }
+                                  })()}
+                    />
+                    <button onClick={this.clearProgress}>Clear progress</button>
+                </div>
                 <SelectiveMap countriesShown={this.state.countriesShown} />
                 <div className={this.rootClass + '__lower'} />
             </div>
