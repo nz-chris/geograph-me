@@ -2,13 +2,15 @@
 @import 'variables';
 
 // Mixins
-@import './mixins/Utils';
+@import 'mixins/Utils';
 
 // React Components
-@import './components/Map';
-@import './components/SelectiveMap';
+@import 'components/CountryInfo';
 @import 'components/CountryInput';
 @import 'components/CountryInserter';
+@import 'components/Loading';
+@import 'components/Map';
+@import 'components/SelectiveMap';
 
 // Other
 html, body, #root {
@@ -35,6 +37,7 @@ html, body, #root {
     padding
     margin
     display
+    overflow
     z-index
     cosmetics
     font

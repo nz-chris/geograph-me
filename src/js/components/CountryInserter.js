@@ -23,13 +23,9 @@ class CountryInserter extends Component {
                 this.nameIdMap[country.name.common.toLowerCase()] = country.cca2;
             }
         }
-
-
-        this.onCountrySubmit = this.onCountrySubmit.bind(this);
-        this.clearProgress = this.clearProgress.bind(this);
     }
 
-    onCountrySubmit(value) {
+    onCountrySubmit = (value) => {
         if (!value) return;
 
         value = value.toLowerCase();
@@ -43,13 +39,12 @@ class CountryInserter extends Component {
                 this.setState({countriesShown});
             }
         }
-    }
+    };
 
-    clearProgress() {
+    clearProgress= () => {
         this.setState({countriesShown: []});
         localStorage.setItem('countriesShown', '');
-        this.forceUpdate(this.forceUpdate);
-    }
+    };
 
     render() {
         return (
@@ -74,7 +69,6 @@ class CountryInserter extends Component {
                     <button onClick={this.clearProgress}>Clear progress</button>
                 </div>
                 <SelectiveMap countriesShown={this.state.countriesShown} />
-                <div className={this.rootClass + '__lower'} />
             </div>
         );
     }

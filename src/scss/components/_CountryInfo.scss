@@ -1,0 +1,30 @@
+.country-info {
+    max-width: 30%;
+    position: absolute;
+    padding: $padding-slimmer;
+    margin: $padding-slimmer;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    background: $color-mine-shaft;
+    color: $color-froly;
+    pointer-events: none;
+    transition: $transition-all-fast-no-ease;
+    animation: appear-out-of-fucking-nowhere $transition;
+
+    @keyframes appear-out-of-fucking-nowhere {
+        from {
+            opacity: 0;
+            padding: 0;
+        }
+        to {
+            opacity: 1;
+            padding: $padding-slimmer;
+        }
+    }
+
+    strong {
+        font-weight: 500;
+        font-size: 1.25em;
+        color: white;
+    }
+}

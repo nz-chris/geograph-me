@@ -3,8 +3,6 @@
     $land-selector: '#{$this} &, .landxx, .limitxx, *';
 
     &__land {
-        transition: $transition-all;
-
         &--invisible {
             #{$land-selector} {
                 opacity: 0;

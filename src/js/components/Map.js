@@ -1,117 +1,242 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import ReactSVG from 'react-svg'
+import svgPanZoom from 'svg-pan-zoom';
+import countries from 'world-countries';
+
+import utils from '../utils/Utils';
+import scssVariables from '../../scss/_variables.scss';
+
+// Components
+import Loading from './Loading';
+import OnlyRenderOnce from './OnlyRenderOnce'
 
 // Images
 import mapSvg from '../../images/world-map.svg';
+import CountryInfo from './CountryInfo';
 
 class Map extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            activeCountryInfo: null,
+            activeCountryInfoMouseEvent: null,
+        };
+
+        this.rootClass = 'map';
+
+        this.cca2CountryInfoMap = {};
+        for (const country of countries) {
+            this.cca2CountryInfoMap[country.cca2] = country;
+        }
+
         this.svg = null;
-
-        this.scaleTexture = this.scaleTexture.bind(this);
+        this.zoomPanSvg = null;
+        this.zoomPanViewport = null;
+        this.zoomDependentStyle = null;
+        this.zoomScale = 1;
+        this.zoomComparisonThreshold = 0.001;
     }
 
-    componentDidMount() {
-        window.addEventListener('resize', this.scaleTexture)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.scaleTexture)
-    }
-
-    scaleTexture() {
+    onDoubleClick = () => {
         if (!this.svg) return;
 
-        const textureFilter = this.svg.getElementById('texture-0');
-        const textureFilterDiffLight = textureFilter.getElementsByTagName('feDiffuseLighting')[0];
-        const diffLightSurfaceScale = (window.innerWidth / 3000).toString();
-        textureFilterDiffLight.setAttribute('surfaceScale', diffLightSurfaceScale );
-    }
+        this.zoomPanViewport.style.transform = this.initialZoomPanViewportTransform;
+        this.zoomPanViewport.setAttribute('transform', this.initialZoomPanViewportTransform);
+
+        this.zoomPanSvg.resetPan();
+        this.zoomPanSvg.resetZoom();
+    };
+
+    onZoom = (scale) => {
+        if (!this.svg) return;
+
+        this.zoomScale = scale;
+        const newStrokeWidth = scssVariables.strokeWidth / scale;
+        this.zoomDependentStyle.innerHTML = `.landxx, .limitxx { stroke-width: ${newStrokeWidth} !important; }`;
+        if (scale > 1 - this.zoomComparisonThreshold && scale < 1 + this.zoomComparisonThreshold) {
+            const panResetTime = 300; // ms
+            this.zoomPanViewport.style.transition = `transform ${panResetTime}ms ease-in-out`;
+            setTimeout(() => {
+                this.zoomPanSvg.resetPan();
+                setTimeout(() => {
+                    this.zoomPanViewport.style.transition = 'none';
+                }, panResetTime);
+            }, 0);
+        }
+    };
+
+    beforePan = (oldPan, newPan) => {
+        if (!this.svg) return;
+
+        const gutterWidth = this.zoomPanViewport.getBoundingClientRect().width / 2 / this.zoomScale
+            , gutterHeight = this.zoomPanViewport.getBoundingClientRect().height / 2 / this.zoomScale
+            , sizes = this.zoomPanSvg.getSizes()
+            , leftLimit = -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) + gutterWidth
+            , rightLimit = sizes.width - gutterWidth - (sizes.viewBox.x * sizes.realZoom)
+            , topLimit = -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) + gutterHeight
+            , bottomLimit = sizes.height - gutterHeight - (sizes.viewBox.y * sizes.realZoom);
+        const customPan = {};
+        customPan.x = Math.max(leftLimit, Math.min(rightLimit, newPan.x));
+        customPan.y = Math.max(topLimit, Math.min(bottomLimit, newPan.y));
+        return customPan;
+    };
+
+    onPan = () => {
+        if (!this.svg) return;
+
+        if (this.zoomScale > 1 - this.zoomComparisonThreshold && this.zoomScale < 1 + this.zoomComparisonThreshold) {
+            this.zoomPanSvg.resetPan();
+        }
+    };
+
+    initSvgPanZoom = () => {
+        if (!this.svg) return;
+
+        const svgId = `${this.rootClass}__svg-id-${Math.floor(1000 * Math.random())}`;
+        this.svg.id = svgId;
+        this.zoomPanSvg = svgPanZoom(
+            `#${svgId}`,
+            {
+                dblClickZoomEnabled: false,
+                preventMouseEventsDefault: false,
+                minZoom: 1,
+                zoomScaleSensitivity: 0.3,
+                onZoom: this.onZoom,
+                beforePan: this.beforePan,
+                onPan: this.onPan,
+            }
+        );
+
+        this.zoomPanViewport = this.svg.querySelector('.svg-pan-zoom_viewport');
+
+        // To ensure we don't append multiple style tags.
+        if (!this.zoomDependentStyle) {
+            const css = '.landxx, .limitxx { stroke-width: 1 !important; }';
+            const head = document.head || document.getElementsByTagName('head')[0];
+            const style = document.createElement('style');
+            style.id = `style-id-${Math.floor(1000 * Math.random())}`;
+            style.type = 'text/css';
+            style.appendChild(document.createTextNode(css));
+            head.appendChild(style);
+            this.zoomDependentStyle = style;
+        }
+
+        this.svg.style.height = `calc(100vh - ${this.svg.getBoundingClientRect().top}px)`;
+        this.initialZoomPanViewportTransform = this.zoomPanViewport.getAttribute('transform');
+    };
+
+
+    initCountries = () => {
+        const colors = [
+            '#505050',
+            '#7c7c7c',
+            '#a8a8a8',
+            '#d3d3d3'
+        ];
+
+        utils.shuffle(colors);
+
+        const subregionColors = {
+            'North America': colors[0],
+            'Central America': colors[1],
+            'Caribbean': colors[2],
+            'South America': colors[3],
+
+            'Northern Europe': colors[0],
+            'Western Europe': colors[1],
+            'Southern Europe': colors[2],
+            'Eastern Europe': colors[3],
+
+            'Western Asia': colors[0],
+            'Central Asia': colors[1],
+            'Southern Asia': colors[3],
+            'Eastern Asia': colors[2],
+            'South-Eastern Asia': colors[0],
+            'Australia and New Zealand': colors[1],
+
+            'Northern Africa': colors[3],
+            'Western Africa': colors[2],
+            'Middle Africa': colors[0],
+            'Eastern Africa': colors[1],
+            'Southern Africa': colors[2],
+
+            'Micronesia': colors[0],
+            'Melanesia': colors[3],
+            'Polynesia': colors[1],
+        };
+
+        const initCountryBySelector = (selector) => {
+            const nodes = this.svg.querySelectorAll(selector);
+            for (const node of nodes) {
+                const id = node.id.toUpperCase();
+                if (Object.keys(this.cca2CountryInfoMap).includes(id)) {
+                    const country = this.cca2CountryInfoMap[id];
+                    if (country.subregion) {
+                        const subregionColor = subregionColors[country.subregion];
+                        if (country.cca2 === 'SK') {
+                            node.setAttribute('fill', subregionColors['Eastern Europe']);
+                        } else if (country.cca2 === 'XK') {
+                            node.setAttribute('fill', subregionColors['Southern Europe']);
+                        } else if (subregionColor) {
+                            node.setAttribute('fill', subregionColor);
+                        }
+                    } else {
+                        node.setAttribute('fill', 'white');
+                    }
+                    if (country.independent) {
+                        const title = node.getElementsByTagName('title')[0];
+                        node.addEventListener('mousemove', (e) => {
+                            if (title) title.remove();
+                            this.setState({activeCountryInfo: country, activeCountryInfoMouseEvent: e});
+                        });
+                        node.addEventListener('mouseleave', () => {
+                            node.insertBefore(title, node.firstChild);
+                            this.setState({activeCountryInfo: null, activeCountryInfoMouseEvent: null});
+                        });
+                    }
+                }
+            }
+        };
+
+        initCountryBySelector('path');
+        initCountryBySelector('g');
+    };
 
     render() {
-        const rootClass = 'map';
         return (
-            <div className={classNames(rootClass, this.props.extraClassNames)}>
-                <svg style={{visibility: 'hidden', position: 'fixed', transform: 'translate(100vw, 100vh)'}}
-                     width={'0'}
-                     height={'0'}
-                >
-                    <defs>
-                        <filter id="noise">
-                            <feTurbulence type="fractalNoise" baseFrequency="1" result="noisy" />
-                            <feColorMatrix in="noisy" type="saturate" values="0.5" result="dest-noisy" />
-                            <feGaussianBlur in="dest-noisy" stdDeviation="0.25" result="blurred-noisy"/>
-                            <feComposite in="blurred-noisy" operator="in" in2="SourceGraphic" result="comp"/>
-                            <feBlend in="SourceGraphic" in2="comp"  mode="multiply" />
-                        </filter>
-                        <filter id="texture">
-                            <feTurbulence type="turbulence" baseFrequency="0.01" numOctaves="5" result="noisy" />
-                            <feGaussianBlur in="noisy" stdDeviation="0.5" result="blurred-noisy"/>
-                            <feDiffuseLighting in="blurred-noisy" lightingColor="white" surfaceScale="1.5" result="diff-light">
-                                <feDistantLight azimuth="45" elevation="45"/>
-                            </feDiffuseLighting>
-                            <feComposite operator="in" in="diff-light" in2="SourceGraphic" result="comp"/>
-                            <feBlend in="SourceGraphic" in2="comp"  mode="multiply" />
-                        </filter>
-                        <linearGradient id={'landGradient'}
-                                        x1={'0'} y1={'0'}
-                                        x2={'0'} y2={'0'}
-                                        gradientUnits={'userSpaceOnUse'}
-                                        filter={'url(#texture)'}
-                        >
-                            <stop offset={'8%'} className={`${rootClass}__land-gradient-stop--snow`}/>
-                            <stop offset={'20%'} className={`${rootClass}__land-gradient-stop--land`}/>
-                            <stop offset={'40%'} className={`${rootClass}__land-gradient-stop--desert`}/>
-                            <stop offset={'60%'} className={`${rootClass}__land-gradient-stop--land`}/>
-                            <stop offset={'100%'} className={`${rootClass}__land-gradient-stop--snow`}/>
-                        </linearGradient>
-                        <linearGradient id={'oceanGradient'}
-                                        x1={'0'} y1={'0'}
-                                        x2={'0'} y2={'0'}
-                                        gradientUnits={'userSpaceOnUse'}
-                        >
-                            <stop offset={'0%'} className={`${rootClass}__ocean-gradient-stop--ocean-cold`}/>
-                            <stop offset={'25%'} className={`${rootClass}__ocean-gradient-stop--ocean`}/>
-                            <stop offset={'50%'} className={`${rootClass}__ocean-gradient-stop--ocean-warm`}/>
-                            <stop offset={'75%'} className={`${rootClass}__ocean-gradient-stop--ocean`}/>
-                            <stop offset={'100%'} className={`${rootClass}__ocean-gradient-stop--ocean-cold`}/>
-                        </linearGradient>
-                        <radialGradient id={'auGradient'}>
-                            <stop offset={'0%'} className={`${rootClass}__land-gradient-stop--desert`}/>
-                            <stop offset={'100%'} className={`${rootClass}__land-gradient-stop--land`}/>
-                        </radialGradient>
-                    </defs>
-                </svg>
-                    <ReactSVG svgClassName={`${rootClass}__svg`}
-                              src={mapSvg}
-                              onInjected={(error, svg) => {
-                                  const svgBox = svg.viewBox.baseVal;
-
-                                  const svgY1 = svgBox.y;
-                                  const svgY2 = svgBox.height + svgY1;
-                                  const landGradient = document.getElementById('landGradient');
-                                  landGradient.setAttribute('y1', svgY1.toString());
-                                  landGradient.setAttribute('y2', svgY2.toString());
-                                  const oceanGradient = document.getElementById('oceanGradient');
-                                  oceanGradient.setAttribute('y1', svgY1.toString());
-                                  oceanGradient.setAttribute('y2', svgY2.toString());
-
-                                  const svgCX = svgBox.width / 2 + svgBox.x;
-                                  const svgCY = svgBox.height / 2 + svgY1;
-                                  const oceanClipPath = svg.getElementById('ocean-clip-path');
-                                  oceanClipPath.setAttribute('transform',`translate(${svgCX}, ${svgCY}) scale(0.995) translate(-${svgCX}, -${svgCY})`);
-
-                                  this.props.svgCallback(svg);
-                                  this.svg = svg;
-                                  this.scaleTexture();
-                              }}
+            <div className={classNames(this.rootClass, this.props.extraClassNames)}>
+                {this.state.activeCountryInfo ?
+                    <CountryInfo country={this.state.activeCountryInfo}
+                                 mouseEvent={this.state.activeCountryInfoMouseEvent}
                     />
-                </div>
-                );
+                    : ''
                 }
-                }
+                <OnlyRenderOnce ComponentToRender={ReactSVG}
+                                className={`${this.rootClass}__svg-wrapper`}
+                                svgClassName={`${this.rootClass}__svg`}
+                                src={mapSvg}
+                                fallback={() => <span>Oops! Failed to load the map. Sorry.</span>}
+                                loading={() => {
+                                    return (
+                                        <Loading style={{'background': `radial-gradient(${scssVariables.colorOcean}, transparent)`}} />
+                                    );
+                                }}
+                                onInjected={(error, svg) => {
+                                    if (!this.svg) {
+                                        this.svg = svg;
+                                        this.initCountries();
+                                        this.initSvgPanZoom();
+                                        this.props.svgCallback(svg);
+                                    }
+                                }}
+                                onDoubleClick={this.onDoubleClick}
+                />
+            </div>
+        );
+    }
 
-                export default Map;
+}
+
+export default Map;

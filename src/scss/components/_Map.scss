@@ -1,21 +1,26 @@
 .map {
-    &__svg {
-        width: 100%;
-        height: auto;
-        max-height: calc(100vh - #{$min-interact-able + $padding});
+    position: relative;
 
-        display: block;
-        user-select: none;
+    &__svg-wrapper {
+        max-width: 100%;
+        height: calc(100vh - #{$min-interact-able + $padding * 2});
+        max-height: 100%;
     }
 
     &__svg {
+        width: 100%;
+        height: auto;
+        max-height: calc(100vh - #{$min-interact-able + $padding * 2});
+
+        display: block;
+        user-select: none;
+
         .oceanxx {
-            fill: url(#oceanGradient);
+            fill: $color-ocean;
         }
 
         .landxx, .limitxx {
-            fill: url(#landGradient);
-            stroke: url(#oceanGradient);
+            stroke: black;
             stroke-width: $stroke-width;
             fill-rule: evenodd;
         }
@@ -23,45 +28,5 @@
         .limitxx {
             stroke-dasharray: 1;
         }
-
-        .coastxx {
-            stroke-width: 0;
-        }
-    }
-
-    &__land-gradient-stop {
-        &--snow {
-            stop-color: white;
-        }
-
-        &--land {
-            stop-color: $color-land;
-        }
-
-        &--desert {
-            stop-color: $color-desert;
-        }
-    }
-
-    &__ocean-gradient-stop {
-        &--ocean-cold {
-            stop-color: $color-ocean-cold;
-        }
-        &--ocean {
-            stop-color: $color-ocean;
-        }
-        &--ocean-warm {
-            stop-color: $color-ocean-warm;
-        }
-    }
-
-    // Antarctica and Greenland.
-    #aq, #gl {
-        fill: white;
-    }
-
-    // Mainland Australia.
-    #path3348 {
-        fill: url(#auGradient);
     }
 }
