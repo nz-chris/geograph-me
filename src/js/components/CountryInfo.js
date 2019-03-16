@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FlagIcon from './FlagIcon'
 import currencies from 'currency-codes'
 import getSymbolFromCurrency from 'currency-symbol-map'
+import PropTypes from 'prop-types';
 
 class CountryInfo extends Component {
     render() {
@@ -74,6 +75,11 @@ class CountryInfo extends Component {
 
 CountryInfo.defaultProps = {
     mouseEvent: {offsetX: 0, offsetY: 0},
+};
+
+CountryInfo.propTypes = {
+    country: PropTypes.object,
+    mouseEvent: PropTypes.object,
 };
 
 export default CountryInfo;

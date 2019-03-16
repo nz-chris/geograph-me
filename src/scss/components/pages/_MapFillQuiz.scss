@@ -1,27 +1,24 @@
-.country-inserter {
-    min-height: 100%;
+.map-fill-quiz {
     height: 100%;
-
     display: flex;
     flex-direction: column;
-
     background-color: $color-mine-shaft;
 
     &__upper {
         width: 100%;
-        min-height: $min-interact-able;
+        min-height: $min-interactive;
         padding: $padding 0;
         display: flex;
         flex-direction: row;
         justify-content: center;
 
         > * {
-            &:not(:last-child) {
-                margin-right: $padding-slimmer;
-            }
-
             &:not(input) {
                 width: 120px;
+            }
+
+            &:not(:last-child) {
+                margin-right: $padding-slimmer;
             }
         }
     }
@@ -30,7 +27,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
         background: $color-tundora;
         border-radius: $border-radius-subtle;
     }

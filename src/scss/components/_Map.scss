@@ -1,17 +1,16 @@
 .map {
     position: relative;
+    flex-grow: 1;
 
     &__svg-wrapper {
-        max-width: 100%;
-        height: calc(100vh - #{$min-interact-able + $padding * 2});
-        max-height: 100%;
+        height: 100%;
+
+        > div {
+            height: 100%;
+        }
     }
 
     &__svg {
-        width: 100%;
-        height: auto;
-        max-height: calc(100vh - #{$min-interact-able + $padding * 2});
-
         display: block;
         user-select: none;
 
@@ -19,10 +18,11 @@
             fill: $color-ocean;
         }
 
-        .landxx, .limitxx {
+        .landxx,
+        .limitxx {
+            fill-rule: evenodd;
             stroke: black;
             stroke-width: $stroke-width;
-            fill-rule: evenodd;
         }
 
         .limitxx {

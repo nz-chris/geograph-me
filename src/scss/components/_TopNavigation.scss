@@ -1,0 +1,43 @@
+$color-top-navigation-background: $color-tundora;
+$top-navigation-height: $min-interactive;
+$border-width: 2px;
+
+.top-navigation {
+    height: $top-navigation-height;
+    padding: 0 $padding;
+    display: flex;
+    align-items: center;
+    background: $color-top-navigation-background;
+
+    &__link {
+        height: $top-navigation-height;
+        padding: 0 $padding;
+        line-height: $top-navigation-height;
+        border: $border-width $color-mine-shaft solid;
+        border-top: none;
+        border-bottom: none;
+        transition: $transition-all-faster;
+
+        &--active {
+            background: rgba($color-cerulean-blue, 0.2);
+            cursor: default;
+        }
+
+        &:not(:first-of-type) {
+            margin-left: -$border-width;
+        }
+
+        &:hover:not(&--active) {
+            background: lighten($color-top-navigation-background, $hover-lighten-darken-amount);
+        }
+
+        // Well, that's confusing.
+        // active as in click is down on the element,
+        // --active as in the link is to the page the user is on.
+        &:active:not(&--active) {
+            padding-bottom: 1px;
+            margin-top: -1px;
+            transition: none;
+        }
+    }
+}

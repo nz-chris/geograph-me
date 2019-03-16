@@ -1,50 +1,55 @@
 // Colors
-    // Named
-        $color-froly: #f47174;
-        $color-cod-grey: #0f0f0f;
-        $color-mine-shaft: #202020;
-        $color-tundora: #454545;
-        $color-nobel: #b7b7b7;
-        $color-gallery: #eeeeee;
-    // Purpose
-        $color-box-shadow: black;
-        $color-negative-button: $color-froly;
-        // Map
-            $color-ocean: #2866b1;
+//// Named
+$color-froly: #f47174;
+$color-cerulean-blue: #2866b1;
+$color-cod-grey: #0f0f0f;
+$color-mine-shaft: #202020;
+$color-tundora: #454545;
+$color-nobel: #b7b7b7;
+$color-gallery: #eee;
+//// Purpose
+$color-text: $color-gallery;
+$color-box-shadow: black;
+$color-negative-button: $color-froly;
+$color-ocean: $color-cerulean-blue;
 
 // Dimensions
-    $min-interact-able: 44px;
-    $padding: 15px;
-    $padding-slimmer: 10px;
+$min-interactive: 44px;
+$padding: 15px;
+$padding-slimmer: 10px;
 
 // Cosmetics
-    $box-shadow: 2px 2px 8px $color-box-shadow;
-    $border-radius: 18px;
-    $border-radius-subtle: 4px;
+$box-shadow: 2px 2px 8px $color-box-shadow;
+$border-radius: 18px;
+$border-radius-subtle: 4px;
+$hover-lighten-darken-amount: 7;
 
 // Z Index
-    $z-top: 90000;
-    $z-higher: 500;
-    $z-high: 400;
-    $z-medium-high: 300;
-    $z-medium: 200;
-    $z-low-medium: 100;
-    $z-low: 0;
-    $z-bottom: -100;
+$z-top: 90000;
+$z-higher: 500;
+$z-high: 400;
+$z-medium-high: 300;
+$z-medium: 200;
+$z-low-medium: 100;
+$z-low: 0;
+$z-bottom: -100;
 
 // Animations
-    $transition-fast-no-ease: 0.1s;
-    $transition-slower: 0.5s ease-in-out;
-    $transition: 0.3s ease-in-out;
-    $transition-faster: 0.15s ease-in-out;
-    $transition-all-fast-no-ease: all $transition-fast-no-ease;
-    $transition-all-slower: all $transition-slower;
-    $transition-all: all $transition;
-    $transition-all-faster: all $transition-faster;
+$transition-fast-no-ease: 0.1s;
+$transition-slower: 0.5s ease-in-out;
+$transition: 0.3s ease-in-out;
+$transition-faster: 0.15s ease-in-out;
+$transition-all-fast-no-ease: all $transition-fast-no-ease;
+$transition-all-slower: all $transition-slower;
+$transition-all: all $transition;
+$transition-all-faster: all $transition-faster;
 
 // SVG
-    $stroke-width: 0.8;
+$stroke-width: 0.8;
 
+// Stuff that can be imported by js files
+/* stylelint-disable */
+// noinspection ALL
 :export {
     colorOcean: $color-ocean;
     strokeWidth: $stroke-width;

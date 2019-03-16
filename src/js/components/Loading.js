@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
+import utils from '../utils/Utils'
 
 class Loading extends Component {
     constructor(props) {
         super(props);
+
+        this.rootClass = 'loading';
 
         this.ref = React.createRef();
     }
@@ -19,24 +24,31 @@ class Loading extends Component {
 
     render() {
         return (
-            <div className={'loading'}
+            <div className={this.rootClass}
                  style={this.props.style}
                  ref={this.ref}
             >
-                <div className={"lds-ring"}>
-                    <div/>
-                    <div/>
-                    <div/>
-                    <div/>
+                <div className={utils.el(this.rootClass, 'ring')}>
+                    <div />
+                    <div />
+                    <div />
+                    <div />
                 </div>
             </div>
         );
     }
 }
 
+Loading.propTypes = {
+    showAfterTime: PropTypes.number,
+    fadeInTime: PropTypes.number,
+    style: PropTypes.object,
+};
+
 Loading.defaultProps = {
     showAfterTime: 200,
     fadeInTime: 1000,
+    style: {},
 };
 
 export default Loading;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class OnlyRenderOnce extends Component {
     shouldComponentUpdate() {
@@ -11,5 +12,9 @@ class OnlyRenderOnce extends Component {
         return <ComponentToRender {...actualProps} />
     }
 }
+
+OnlyRenderOnce.propTypes = {
+    ComponentToRender: PropTypes.func
+};
 
 export default OnlyRenderOnce;

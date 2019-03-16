@@ -3,21 +3,20 @@
     cursor: help;
 }
 
-[tooltip]:before {
-    content: attr(tooltip);
+[tooltip]::before {
     position: absolute;
     top: 50%;
-    pointer-events: none;
-    padding: $padding-slimmer;
     z-index: $z-top;
+    padding: $padding-slimmer;
+    content: attr(tooltip);
     opacity: 0;
     border-radius: $border-radius;
     box-shadow: $box-shadow;
-
     transition: $transition-all-faster;
+    pointer-events: none;
 }
 
-[tooltip]:hover:before {
+[tooltip]:hover::before {
     top: 100%;
     opacity: 1;
     background: $color-cod-grey;

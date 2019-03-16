@@ -1,47 +1,17 @@
 // Variables
 @import 'variables';
 
-// Mixins
-@import 'mixins/Utils';
-
 // React Components
+@import 'components/pages/HomePage';
 @import 'components/CountryInfo';
 @import 'components/CountryInput';
-@import 'components/CountryInserter';
+@import 'components/pages/MapFillQuiz';
 @import 'components/Loading';
 @import 'components/Map';
 @import 'components/SelectiveMap';
+@import 'components/TopNavigation';
 
 // Other
-html, body, #root {
-    min-height: 100%;
-    height: 100%;
-    margin: 0;
-
-    font-family: 'Roboto', sans-serif;
-    color: $color-gallery;
-    button, input {
-        font-family: 'Roboto', sans-serif;
-        color: $color-gallery;
-    }
-}
+@import 'globalInclude.scss';
 @import 'button';
 @import 'tooltip';
-
-// CSS order reference
-/*
-    content
-    width
-    height
-    position
-    padding
-    margin
-    display
-    overflow
-    z-index
-    cosmetics
-    font
-    cursor / pointer-events
-    transition
-    animation
-*/

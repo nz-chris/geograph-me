@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 class CountryInput extends Component {
@@ -6,35 +7,41 @@ class CountryInput extends Component {
         super(props);
 
         this.rootClass = 'country-input';
-        this.inputRef = React.createRef();
 
-        this.onBlur = this.onBlur.bind(this);
+        this.inputRef = React.createRef();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate() {
         if (this.props.clear) {
             this.inputRef.current.value = '';
         }
     }
 
-
-    onBlur() {
-        this.props.onSubmit(this.inputRef.current.value);
-    }
-
     render() {
-        const inputClassName = classNames(this.rootClass, this.props.extraClassNames);
-
         return (
-            <input className={inputClassName}
+            <input className={classNames(this.rootClass, this.props.extraClassName)}
                    type={'text'}
                    placeholder={this.props.placeholder}
                    ref={this.inputRef}
-                   onBlur={this.onBlur}
-                   onKeyPress={(e) => {e.key === 'Enter' && this.props.onSubmit(this.inputRef.current.value)}}
+                   onBlur={() => this.props.onSubmit(this.inputRef.current.value)}
+                   onKeyPress={(e) => e.key === 'Enter' && this.props.onSubmit(this.inputRef.current.value)}
             />
         );
     }
 }
+
+CountryInput.propTypes = {
+    clear: PropTypes.bool,
+    extraClassName: PropTypes.string,
+    placeholder: PropTypes.string,
+    onSubmit: PropTypes.func,
+};
+
+CountryInput.defaultProps = {
+    clear: false,
+    extraClassName: '',
+    placeholder: '',
+    onSubmit: () => {},
+};
 
 export default CountryInput;

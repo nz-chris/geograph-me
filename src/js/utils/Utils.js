@@ -9,5 +9,14 @@ export default {
             [a[i], a[j]] = [a[j], a[i]];
         }
         return a;
+    },
+    el(base, element) {
+        return base + '__' + element;
+    },
+    mod(base, modifier) {
+        return base + '--' + modifier;
+    },
+    elMod(base, element, modifier) {
+        return this.mod(this.el(base, element), modifier)
     }
 };

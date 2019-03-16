@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import countries from 'world-countries';
 
-// Components
-import CountryInput from './CountryInput';
-import SelectiveMap from './SelectiveMap';
+import utils from '../../utils/Utils'
 
-class CountryInserter extends Component {
+// Components
+import CountryInput from '../CountryInput';
+import SelectiveMap from '../SelectiveMap';
+
+class MapFillQuiz extends Component {
     constructor(props) {
         super(props);
 
@@ -14,7 +16,8 @@ class CountryInserter extends Component {
             countriesShown: storedCountriesShown ? storedCountriesShown.split(',') : [],
         };
 
-        this.rootClass = 'country-inserter';
+        this.rootClass = 'map-fill-quiz';
+
         this.correct = false;
 
         this.nameIdMap = {};
@@ -49,9 +52,9 @@ class CountryInserter extends Component {
     render() {
         return (
             <div className={this.rootClass}>
-                <div className={this.rootClass + '__upper'}>
-                    <div className={this.rootClass + '__progress'}
-                         tooltip="Independent countries on the map"
+                <div className={utils.el(this.rootClass, 'upper')}>
+                    <div className={utils.el(this.rootClass, 'progress')}
+                         tooltip='Independent countries on the map'
                     >
                         {this.state.countriesShown.length + ' / ' + Object.keys(this.nameIdMap).length}
                     </div>
@@ -74,4 +77,4 @@ class CountryInserter extends Component {
     }
 }
 
-export default CountryInserter;
+export default MapFillQuiz;

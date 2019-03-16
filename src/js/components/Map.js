@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ReactSVG from 'react-svg'
 import svgPanZoom from 'svg-pan-zoom';
 import countries from 'world-countries';
 
-import utils from '../utils/Utils';
 import scssVariables from '../../scss/_variables.scss';
+import utils from '../utils/Utils';
 
 // Components
 import Loading from './Loading';
@@ -31,6 +32,8 @@ class Map extends Component {
             this.cca2CountryInfoMap[country.cca2] = country;
         }
 
+        this.parentDiv = React.createRef();
+
         this.svg = null;
         this.zoomPanSvg = null;
         this.zoomPanViewport = null;
@@ -40,7 +43,7 @@ class Map extends Component {
     }
 
     onDoubleClick = () => {
-        if (!this.svg) return;
+        if (!this.svg || !this.parentDiv.current) return;
 
         this.zoomPanViewport.style.transform = this.initialZoomPanViewportTransform;
         this.zoomPanViewport.setAttribute('transform', this.initialZoomPanViewportTransform);
@@ -50,7 +53,7 @@ class Map extends Component {
     };
 
     onZoom = (scale) => {
-        if (!this.svg) return;
+        if (!this.svg || !this.parentDiv.current) return;
 
         this.zoomScale = scale;
         const newStrokeWidth = scssVariables.strokeWidth / scale;
@@ -68,15 +71,14 @@ class Map extends Component {
     };
 
     beforePan = (oldPan, newPan) => {
-        if (!this.svg) return;
-
-        const gutterWidth = this.zoomPanViewport.getBoundingClientRect().width / 2 / this.zoomScale
-            , gutterHeight = this.zoomPanViewport.getBoundingClientRect().height / 2 / this.zoomScale
+        if (!this.svg || !this.parentDiv.current) return;
+        const gutterWidth = this.parentDiv.current.getBoundingClientRect().width / 2
+            , gutterHeight = this.parentDiv.current.getBoundingClientRect().height / 2
             , sizes = this.zoomPanSvg.getSizes()
             , leftLimit = -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) + gutterWidth
             , rightLimit = sizes.width - gutterWidth - (sizes.viewBox.x * sizes.realZoom)
             , topLimit = -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) + gutterHeight
-            , bottomLimit = sizes.height - gutterHeight - (sizes.viewBox.y * sizes.realZoom);
+            , bottomLimit = topLimit + sizes.viewBox.height * sizes.realZoom;
         const customPan = {};
         customPan.x = Math.max(leftLimit, Math.min(rightLimit, newPan.x));
         customPan.y = Math.max(topLimit, Math.min(bottomLimit, newPan.y));
@@ -92,7 +94,22 @@ class Map extends Component {
     };
 
     initSvgPanZoom = () => {
-        if (!this.svg) return;
+        if (!this.svg || !this.parentDiv.current) return;
+
+        const svgAspectRatio = this.svg.getAttribute('width') / this.svg.getAttribute('height');
+        const availableSvgHeight = window.innerHeight - this.svg.getBoundingClientRect().top;
+        const availableSvgWidth = window.innerWidth;
+        const availableSvgAreaAspectRato = availableSvgWidth / availableSvgHeight;
+        // If the available area is more landscape than the svg.
+        let autoHeight = false;
+        if (availableSvgAreaAspectRato > svgAspectRatio) {
+            this.svg.style.height = availableSvgHeight+'px';
+            this.svg.style.width = '100%';
+        } else {
+            this.svg.style.width = availableSvgWidth+'px';
+            autoHeight = true;
+            this.svg.style.height = 'auto';
+        }
 
         const svgId = `${this.rootClass}__svg-id-${Math.floor(1000 * Math.random())}`;
         this.svg.id = svgId;
@@ -123,7 +140,10 @@ class Map extends Component {
             this.zoomDependentStyle = style;
         }
 
-        this.svg.style.height = `calc(100vh - ${this.svg.getBoundingClientRect().top}px)`;
+        if (autoHeight) {
+            this.svg.style.height = '100%';
+        }
+
         this.initialZoomPanViewportTransform = this.zoomPanViewport.getAttribute('transform');
     };
 
@@ -206,7 +226,10 @@ class Map extends Component {
 
     render() {
         return (
-            <div className={classNames(this.rootClass, this.props.extraClassNames)}>
+            <div
+                className={classNames(this.rootClass, this.props.extraClassName)}
+                ref={this.parentDiv}
+            >
                 {this.state.activeCountryInfo ?
                     <CountryInfo country={this.state.activeCountryInfo}
                                  mouseEvent={this.state.activeCountryInfoMouseEvent}
@@ -214,13 +237,13 @@ class Map extends Component {
                     : ''
                 }
                 <OnlyRenderOnce ComponentToRender={ReactSVG}
-                                className={`${this.rootClass}__svg-wrapper`}
-                                svgClassName={`${this.rootClass}__svg`}
+                                className={utils.el(this.rootClass, 'svg-wrapper')}
+                                svgClassName={utils.el(this.rootClass, 'svg')}
                                 src={mapSvg}
                                 fallback={() => <span>Oops! Failed to load the map. Sorry.</span>}
                                 loading={() => {
                                     return (
-                                        <Loading style={{'background': `radial-gradient(${scssVariables.colorOcean}, transparent)`}} />
+                                        <Loading style={{background: `radial-gradient(${scssVariables.colorOcean}, transparent)`}} />
                                     );
                                 }}
                                 onInjected={(error, svg) => {
@@ -238,5 +261,15 @@ class Map extends Component {
     }
 
 }
+
+Map.propTypes = {
+    extraClassName: PropTypes.string,
+    svgCallback: PropTypes.func,
+};
+
+Map.defaultProps = {
+    extraClassName: '',
+    svgCallback: () => {},
+};
 
 export default Map;

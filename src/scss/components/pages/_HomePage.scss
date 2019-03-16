@@ -1,0 +1,53 @@
+$home-page-background-color: $color-mine-shaft;
+$game-link-height: 200px;
+$game-link-margin: $padding;
+
+.home-page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__heading {
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        background: $color-ocean;
+    }
+
+    &__body {
+        flex-grow: 1;
+        background: $home-page-background-color;
+    }
+
+    &__game-nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: $padding;
+    }
+
+    &__game-link {
+        width: 150px;
+        height: $game-link-height;
+        margin: $game-link-margin;
+        color: $color-mine-shaft !important; // Avoid visited color.
+        line-height: $game-link-height;
+        text-align: center;
+        background: $color-gallery;
+        border-bottom: 0 $home-page-background-color solid; // To transition back to.
+        border-radius: $border-radius-subtle;
+        transition: $transition-all-faster;
+
+        &--disabled {
+            opacity: 0.5;
+        }
+
+        &:hover:not(&--disabled) {
+            margin-top: $game-link-margin - 4px;
+            border-bottom: 4px $color-cerulean-blue solid;
+        }
+    }
+}
