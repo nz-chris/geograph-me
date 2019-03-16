@@ -19,5 +19,8 @@ steps:
     npm install
     npm run lint
     npm run slint
+    if [ $? -ne 0 ]; then
+        exit 1
+    fi
     npm run build
   displayName: 'npm install and build'
