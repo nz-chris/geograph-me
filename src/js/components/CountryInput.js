@@ -34,7 +34,6 @@ CountryInput.propTypes = {
     clear: PropTypes.bool,
     extraClassName: PropTypes.string,
     placeholder: PropTypes.string,
-    onSubmit: PropTypes.func,
 };
 
 CountryInput.defaultProps = {
