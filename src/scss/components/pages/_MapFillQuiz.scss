@@ -12,22 +12,21 @@
         flex-direction: row;
         justify-content: center;
 
-        > * {
-            &:not(input) {
-                width: 120px;
-            }
-
-            &:not(:last-child) {
-                margin-right: $padding-slimmer;
-            }
+        >:not(:last-child) {
+            margin-right: $padding-slimmer;
         }
     }
 
     &__progress {
+        width: 120px;
         display: flex;
         align-items: center;
         justify-content: center;
         background: $color-tundora;
         border-radius: $border-radius-subtle;
+    }
+
+    button {
+        width: 120px;
     }
 }
