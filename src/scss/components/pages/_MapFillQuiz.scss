@@ -12,7 +12,7 @@
         flex-direction: row;
         justify-content: center;
 
-        >:not(:last-child) {
+        > :not(:last-child) {
             margin-right: $padding-slimmer;
         }
     }
@@ -24,6 +24,10 @@
         justify-content: center;
         background: $color-tundora;
         border-radius: $border-radius-subtle;
+    }
+
+    &__country-input {
+        width: calc(50% + 100px);
     }
 
     button {

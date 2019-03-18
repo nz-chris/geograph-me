@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import countries from 'world-countries';
 
-import utils from '../../utils/Utils'
+import utils from '../../utils/utils'
 import commonNonIndependents from '../../../data/common-non-independents';
 
 // Components
-import CountryInput from '../CountryInput';
+import QuizInput from '../QuizInput';
 import SelectiveMap from '../SelectiveMap';
+import Notifiable from '../Notifiable'
 
 class MapFillQuiz extends Component {
     constructor(props) {
@@ -21,6 +22,8 @@ class MapFillQuiz extends Component {
         this.rootClass = 'map-fill-quiz';
 
         this.inputRef = null;
+        this.clearUnderInputNotificationTimeout = null;
+        this.underInputNotificationDisplayTime = 3500; // ms.
 
         // Map place names to their cca2 if they are independent countries, false otherwise.
         this.placeNames = {};
@@ -37,13 +40,14 @@ class MapFillQuiz extends Component {
     }
 
     onCountrySubmit = (value) => {
-        this.setState({underInputNotification: null});
         if (!value) return;
 
         value = value.toLowerCase();
+        const properCaseValue = value.replace(/\b(\w)/g, s => s.toUpperCase());
         if (this.placeNames.hasOwnProperty(value)) {
             if (this.placeNames[value]) {
                 // `value` is an independent country name.
+                this.setUnderInputNotification(null);
                 const id = this.placeNames[value];
                 let countriesShown = this.state.countriesShown;
                 if (!countriesShown.includes(id)) {
@@ -51,12 +55,12 @@ class MapFillQuiz extends Component {
                     this.inputRef.value = '';
                     localStorage.setItem('countriesShown', countriesShown);
                     this.setState({countriesShown});
+                } else {
+                    this.setUnderInputNotification(`You've already got ${properCaseValue} on the map!`)
                 }
             } else {
                 // `value` is a country name but not independent.
-                const properCaseValue = value.replace(/\b(\w)/g, s => s.toUpperCase());
-                this.setState({underInputNotification: `${properCaseValue} is a place of sorts, but not an independent country.`});
-                // this.inputRef.setAttribute('underNotification', `${properCaseValue} is a place of sorts, but not an independent country.`)
+                this.setUnderInputNotification(`${properCaseValue} is a place of sorts, but not an independent country.`);
             }
         }
     };
@@ -66,6 +70,18 @@ class MapFillQuiz extends Component {
         localStorage.setItem('countriesShown', '');
     };
 
+    setUnderInputNotification = (message) => {
+        if (!message) {
+            this.setState({underInputNotification: null});
+        } else if (message !== this.state.underInputNotification) {
+            this.setState({underInputNotification: message});
+            clearTimeout(this.clearUnderInputNotificationTimeout);
+            this.clearUnderInputNotificationTimeout = setTimeout(() => {
+                this.setState({underInputNotification: null});
+            }, this.underInputNotificationDisplayTime);
+        }
+    };
+
     render() {
         return (
             <div className={this.rootClass}>
@@ -73,30 +89,20 @@ class MapFillQuiz extends Component {
                     <div className={utils.el(this.rootClass, 'progress')}
                          tooltip='Independent countries on the map'
                     >
-                        {this.state.countriesShown.length + ' / ' + Object.keys(this.placeNames).length}
+                        {
+                            this.state.countriesShown.length + ' / ' +
+                            Object.values(this.placeNames).filter(value => !!value).length
+                        }
                     </div>
-                    <span tooltip="the styles on country-input need to be on this span! yikes. best way to achieve this? new component? think.">
-                    <CountryInput placeholder={'Enter a country name'}
-                                  onSubmit={this.onCountrySubmit}
-                                  inputRefCallback={(ref) => this.inputRef = ref}
-                    /></span>
-                    {
-                        /*
-                        ideas...
-                        <Notifiable message={this.state.underInputNotification}>
-                            <CountryInput placeholder={'Enter a country name'}
-                                          onSubmit={this.onCountrySubmit}
-                                          inputRefCallback={(ref) => this.inputRef = ref}
-                            />
-                         </Notifiable>
-                         OR
-                         <CountryInput placeholder={'Enter a country name'}
-                                      onSubmit={this.onCountrySubmit}
-                                      inputRefCallback={(ref) => this.inputRef = ref}
-                                      underNotification={this.state.underInputNotification}     <------ This will behave like the _tooltip.scss, except not on hover. set this state to null after 3s or something?
-                         />
-                         */
-                    }
+                    <Notifiable extraClassName={utils.el(this.rootClass, 'country-input')}
+                                message={this.state.underInputNotification}
+                    >
+                        <QuizInput placeholder={'Enter a country name'}
+                                   onChange={() => this.setUnderInputNotification(null)}
+                                   onSubmit={this.onCountrySubmit}
+                                   inputRefCallback={(ref) => this.inputRef = ref}
+                        />
+                    </Notifiable>
                     <button onClick={this.clearProgress}>Clear progress</button>
                 </div>
                 <SelectiveMap countriesShown={this.state.countriesShown} />

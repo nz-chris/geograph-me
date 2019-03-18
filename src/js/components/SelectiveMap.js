@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import countryIdTitleMap from '../../data/country-id-title-map';
 import scssVariables from '../../scss/_variables.scss';
-import utils from '../utils/Utils'
+import utils from '../utils/utils'
 
 // Components
 import Map from './Map';

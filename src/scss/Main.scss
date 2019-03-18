@@ -4,15 +4,15 @@
 // React Components
 @import 'components/pages/HomePage';
 @import 'components/CountryInfo';
-@import 'components/CountryInput';
+@import 'components/QuizInput';
 @import 'components/pages/MapFillQuiz';
 @import 'components/Loading';
 @import 'components/Map';
 @import 'components/SelectiveMap';
 @import 'components/TopNavigation';
+@import 'components/Notifiable';
 
 // Other
 @import 'globalInclude.scss';
 @import 'button';
 @import 'tooltip';
-@import 'under-notification';

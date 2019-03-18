@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-class CountryInput extends Component {
+class QuizInput extends Component {
     constructor(props) {
         super(props);
 
-        this.rootClass = 'country-input';
+        this.rootClass = 'quiz-input';
 
         this.inputRef = null;
     }
@@ -20,25 +20,27 @@ class CountryInput extends Component {
                        this.inputRef = ref;
                        this.props.inputRefCallback(ref);
                    }}
-                   onBlur={() => this.props.onSubmit(this.inputRef.value)}
+                   onChange={this.props.onChange}
                    onKeyPress={(e) => e.key === 'Enter' && this.props.onSubmit(this.inputRef.value)}
             />
         );
     }
 }
 
-CountryInput.propTypes = {
+QuizInput.propTypes = {
     extraClassName: PropTypes.string,
     placeholder: PropTypes.string,
+    onChange: PropTypes.func,
     onSubmit: PropTypes.func,
     inputRefCallback: PropTypes.func,
 };
 
-CountryInput.defaultProps = {
+QuizInput.defaultProps = {
     extraClassName: '',
-    placeholder: '',
+    placeholder: 'Enter your answer',
+    onChange: () => {},
     onSubmit: () => {},
     inputRefCallback: () => {},
 };
 
-export default CountryInput;
+export default QuizInput;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import utils from '../utils/Utils'
+import utils from '../utils/utils'
 
 class Loading extends Component {
     constructor(props) {

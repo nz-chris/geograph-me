@@ -6,7 +6,7 @@ import svgPanZoom from 'svg-pan-zoom';
 import countries from 'world-countries';
 
 import scssVariables from '../../scss/_variables.scss';
-import utils from '../utils/Utils';
+import utils from '../utils/utils';
 
 // Components
 import Loading from './Loading';
