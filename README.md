@@ -1,1 +1,1 @@
-http://geograph.me/
+https://geograph.me/
