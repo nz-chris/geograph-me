@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
-import utils from '../utils/Utils'
+import utils from '../utils/utils'
 import {orderedTopNavigationPages} from '../siteConfig';
 
 class TopNavigation extends Component {

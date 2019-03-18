@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
-import utils from '../../utils/Utils'
+import utils from '../../utils/utils'
 import {siteInfo, orderedGamePages} from '../../siteConfig';
 
 class HomePage extends Component {

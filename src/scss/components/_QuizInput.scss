@@ -1,7 +1,7 @@
-.country-input {
-    width: calc(50% + 100px);
-    max-width: 100%;
+.quiz-input {
+    width: 100%;
     min-height: $min-interactive;
+    box-sizing: border-box;
     padding: 0 44px;
     font-size: 1.2em;
     background: $color-mine-shaft;
