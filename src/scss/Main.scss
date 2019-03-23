@@ -3,14 +3,15 @@
 
 // React Components
 @import 'components/pages/HomePage';
-@import 'components/CountryInfo';
-@import 'components/QuizInput';
 @import 'components/pages/MapFillQuiz';
+@import 'components/pages/WhichCountryBigger';
+@import 'components/CountryInfo';
 @import 'components/Loading';
 @import 'components/Map';
+@import 'components/Notifiable';
+@import 'components/QuizInput';
 @import 'components/SelectiveMap';
 @import 'components/TopNavigation';
-@import 'components/Notifiable';
 
 // Other
 @import 'globalInclude.scss';
