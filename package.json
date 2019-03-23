@@ -9,6 +9,7 @@
     "react-router-dom": "^4.3.1",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
+    "lodash": "^4.17.11",
     "classnames": "^2.2.6",
     "react-svg": "^7.2.6",
     "svg-pan-zoom": "^3.6.0",
@@ -46,6 +47,7 @@
     },
     "parser": "babel-eslint",
     "env": {
+      "es6": true,
       "browser": true,
       "node": true
     }

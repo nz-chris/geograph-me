@@ -1,0 +1,23 @@
+.which-country-bigger {
+    height: 100%;
+    display: flex;
+
+    &__left,
+    &__right {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: $transition-all-slower;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    &__left:hover {
+        background: rgba($color-froly, 0.2);
+    }
+
+    &__right:hover {
+        background: rgba($color-cerulean-blue, 0.2);
+    }
+}
