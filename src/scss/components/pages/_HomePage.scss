@@ -36,7 +36,7 @@ $game-link-margin: $padding;
         color: $color-mine-shaft !important; // Avoid visited color.
         line-height: $game-link-height;
         text-align: center;
-        background: $color-gallery;
+        background: $color-alto;
         border-bottom: 0 $home-page-background-color solid; // To transition back to.
         border-radius: $border-radius-subtle;
         transition: $transition-all-faster;
@@ -47,7 +47,7 @@ $game-link-margin: $padding;
 
         &:hover:not(&--disabled) {
             margin-top: $game-link-margin - 4px;
-            border-bottom: 4px $color-cerulean-blue solid;
+            border-bottom: 4px $color-froly solid;
         }
     }
 }

@@ -3,6 +3,7 @@ $top-navigation-height: $min-interactive;
 $border-width: 2px;
 
 .top-navigation {
+    z-index: $z-high;
     height: $top-navigation-height;
     padding: 0 $padding;
     display: flex;

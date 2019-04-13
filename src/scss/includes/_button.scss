@@ -2,7 +2,7 @@ button {
     min-height: 44px;
     padding-top: 0;
     background: none;
-    border: 1.5px $color-negative-button solid;
+    border: 1.5px $color-cerulean-blue solid;
     outline: none;
     border-radius: $border-radius-subtle;
     transition: $transition-all-faster;
@@ -16,5 +16,11 @@ button {
         padding-top: 3px;
         border-top-width: 4px;
         transition: none;
+    }
+}
+
+.button {
+    &--negative {
+        border-color: $color-froly;
     }
 }

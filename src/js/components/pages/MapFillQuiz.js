@@ -103,7 +103,7 @@ class MapFillQuiz extends Component {
                                    inputRefCallback={(ref) => this.inputRef = ref}
                         />
                     </Notifiable>
-                    <button onClick={this.clearProgress}>Clear progress</button>
+                    <button className={'button--negative'} onClick={this.clearProgress}>Clear progress</button>
                 </div>
                 <SelectiveMap countriesShown={this.state.countriesShown} />
             </div>

@@ -1,23 +1,195 @@
 .which-country-bigger {
-    height: 100%;
-    display: flex;
+    $this: &;
+    $side-transition: $transition-all-slower;
+    $open-separator-width: 33vw;
 
-    &__left,
-    &__right {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: $color-cod-grey;
+
+    &__side {
+        $side: &;
         width: 50%;
+        height: 100%; // Only needed for transition purposes.
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: $transition-all-slower;
+        background-color: $color-mine-shaft;
+        border: 0 $color-cod-grey solid;
+        transition: $side-transition;
         cursor: pointer;
         user-select: none;
+
+        #{$this}--advancing & {
+            height: calc(100% - 64px);
+            transition: $transition-all;
+        }
+
+        #{$this}--advancing &--left {
+            transform: perspective(800px) rotateY(15deg);
+        }
+
+        #{$this}--advancing &--right {
+            transform: perspective(800px) rotateY(-15deg);
+        }
+
+        #{$this}--guessing &--left:hover {
+            background: rgba($color-froly, 0.2);
+        }
+
+        #{$this}--guessing &--right:hover {
+            background: rgba($color-cerulean-blue, 0.2);
+        }
     }
 
-    &__left:hover {
-        background: rgba($color-froly, 0.2);
+    &__separator {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        background: $color-cod-grey;
+        transition: $transition-all;
+
+        #{$this}--guessing & {
+            width: 8px;
+        }
+
+        #{$this}--advancing & {
+            width: $open-separator-width;
+            height: 100%;
+        }
     }
 
-    &__right:hover {
-        background: rgba($color-cerulean-blue, 0.2);
+    &__separator-content {
+        min-width: $open-separator-width;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    &__separator-content-upper,
+    &__separator-content-lower {
+        height: 33%;
+        display: flex;
+        flex-direction: column;
+        padding: 5% 0;
+    }
+    &__separator-content-upper {
+        justify-content: flex-end;
+    }
+    &__separator-content-lower {
+        justify-content: flex-start;
+    }
+
+    &__progress-circle {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        font-size: 2.5rem;
+        background: $color-cod-grey;
+        //transition: $transition-all;
+
+        #{$this}--guessing & {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #{$this}--advancing & {
+            border: 3px $color-alto solid;
+            box-sizing: border-box;
+        }
+    }
+}
+
+// Basic styles
+.xyz {
+    background: none;
+    border: 0;
+    box-sizing: border-box;
+    margin: 1em;
+    padding: 1em 2em;
+
+    // Using inset box-shadow instead of border for sizing simplicity
+    box-shadow: inset 0 0 0 2px $color-froly;
+    color: $color-froly;
+    font-size: inherit;
+    font-weight: 700;
+
+    // Required, since we're setting absolute on pseudo-elements
+    position: relative;
+    vertical-align: middle;
+
+    &::before,
+    &::after {
+        box-sizing: inherit;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.spin {
+    width: 5em;
+    height: 5em;
+    padding: 0;
+
+    &::before,
+    &::after {
+        top: 0;
+        left: 0;
+    }
+
+    &--cunt {
+        &::before {
+            animation: bla-idk 1s ease-in-out;
+        }
+
+        &::after {
+            animation: sickomode 1s ease-in-out;
+        }
+    }
+}
+
+.circle {
+    border-radius: 100%;
+    box-shadow: none;
+
+    &::before,
+    &::after {
+        border-radius: 100%;
+    }
+}
+//TODO: fix this. works but the timing is way off. look at the codepen to see how the timing used to be.
+//TODO: make trello tickets for this game so we dont forget our ideas mate.
+@keyframes bla-idk {
+    0% {
+        border: 2px solid transparent;
+    }
+    100% {
+        border-top-color: $color-alto;
+        border-right-color: $color-alto;
+        border-bottom-color: $color-alto;
+    }
+}
+
+@keyframes sickomode {
+    0% {
+        border: 0 solid transparent;
+    }
+    100% {
+        border-top: 2px solid $color-alto;
+        border-left-width: 2px;
+        border-right-width: 2px;
+        transform: rotate(270deg);
     }
 }
