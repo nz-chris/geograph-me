@@ -1,27 +1,26 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import classNames from 'classnames';
+import b from '../../includes/Bem'
 
-import utils from '../../utils/utils'
 import {siteInfo, orderedGamePages} from '../../siteConfig';
 
 class HomePage extends Component {
     render() {
-        const rootClass = 'home-page';
+        const b = b('home-page');
         return (
-            <div className={rootClass}>
-                <div className={utils.el(rootClass, 'heading')}>
+            <div className={b}>
+                <div className={b.el('heading')}>
                     <h1>{siteInfo.NAME}</h1>
                     {siteInfo.TAGLINE}
                 </div>
-                <div className={utils.el(rootClass, 'body')}>
-                    <div className={utils.el(rootClass, 'game-nav')}>
+                <div className={b.el('body')}>
+                    <div className={b.el('game-nav')}>
                         {(() => {
                             const links = [];
                             for (let i = 0; i < Object.keys(orderedGamePages).length; i++) {
                                 const page = orderedGamePages[i];
                                 links.push(
-                                    <Link className={utils.el(rootClass, 'game-link')}
+                                    <Link className={b.el('game-link')}
                                           to={page.path}
                                           key={i}
                                     >
@@ -31,7 +30,7 @@ class HomePage extends Component {
                             }
                             return links;
                         })()}
-                        <div className={classNames(utils.el(rootClass, 'game-link'), utils.elMod(rootClass, 'game-link', 'disabled'))}>
+                        <div className={b.el('game-link').mod('disabled')}>
                             Coming soon...
                         </div>
                     </div>

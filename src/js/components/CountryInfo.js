@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
 import FlagIcon from './FlagIcon'
 import currencies from 'currency-codes'
-import getSymbolFromCurrency from 'currency-symbol-map'
 import PropTypes from 'prop-types';
+import b from '../includes/Bem'
+import getSymbolFromCurrency from 'currency-symbol-map'
+
 
 class CountryInfo extends Component {
     render() {
-        const rootClass = 'country-info';
+        const b = b('country-info');
         const country = this.props.country;
         return (
-            <div className={rootClass}
+            <div className={b}
                  style={(() => {
                      const style = {};
                      const bodyWidth = document.body.clientWidth;

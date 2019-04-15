@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import utils from '../utils/utils'
+import b from '../includes/Bem'
 
 class Loading extends Component {
     constructor(props) {
         super(props);
 
-        this.rootClass = 'loading';
+        this.b = b('loading');
 
         this.ref = React.createRef();
     }
@@ -24,11 +25,11 @@ class Loading extends Component {
 
     render() {
         return (
-            <div className={this.rootClass}
+            <div className={this.b}
                  style={this.props.style}
                  ref={this.ref}
             >
-                <div className={utils.el(this.rootClass, 'ring')}>
+                <div className={utils.el(this.b, 'ring')}>
                     <div />
                     <div />
                     <div />

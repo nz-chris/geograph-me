@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import countries from 'world-countries';
 
-import utils from '../../utils/utils'
+import b from '../../includes/Bem'
 import commonNonIndependents from '../../../data/common-non-independents';
 
 // Components
@@ -19,7 +19,7 @@ class MapFillQuiz extends Component {
             underInputNotification: null,
         };
 
-        this.rootClass = 'map-fill-quiz';
+        this.b = b('map-fill-quiz');
 
         this.inputRef = null;
         this.clearUnderInputNotificationTimeout = null;
@@ -83,10 +83,11 @@ class MapFillQuiz extends Component {
     };
 
     render() {
+        const b = this.b;
         return (
-            <div className={this.rootClass}>
-                <div className={utils.el(this.rootClass, 'upper')}>
-                    <div className={utils.el(this.rootClass, 'progress')}
+            <div className={b}>
+                <div className={b.el('upper')}>
+                    <div className={b.el('progress')}
                          tooltip='Independent countries on the map'
                     >
                         {
@@ -94,7 +95,7 @@ class MapFillQuiz extends Component {
                             Object.values(this.placeNames).filter(value => !!value).length
                         }
                     </div>
-                    <Notifiable extraClassName={utils.el(this.rootClass, 'country-input')}
+                    <Notifiable extraClassName={b.el('country-input')}
                                 message={this.state.underInputNotification}
                     >
                         <QuizInput placeholder={'Enter a country name'}

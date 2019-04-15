@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import classNames from 'classnames';
 import utils from '../../utils/utils';
 import Enumeration from '../../includes/Enumeration';
 import b from '../../includes/Bem';
@@ -25,6 +24,8 @@ class WhichCountryBigger extends Component {
             rightCountry: null,
             progress: 0,
         };
+
+        this.b = b('which-country-bigger');
         
         // Map of cca2s that have been used too recently, so are hidden from selection for a bit.
         // Cca2 as key, cool down as value.
@@ -33,9 +34,6 @@ class WhichCountryBigger extends Component {
         this.hiddenCoolDown = 5;
 
         this.countryAreaComparisonList = [...countryAreaComparisonList];
-
-        this.b = b('which-country-bigger'); //TODO: this stuff is working good. Adopt it EVERYWHERE!
-        this.block = 'which-country-bigger'; //TODO: Making this variable redundant!
     }
 
     componentDidMount() {
@@ -234,9 +232,11 @@ class WhichCountryBigger extends Component {
     };
 
     renderCentre() {
+        const b = this.b;
+
         const renderProgressCircle = () => {
             return (
-                <div className={b(this.block).el('progress-circle')}>
+                <div className={b(this.b).el('progress-circle')}>
                     <span>{this.state.progress}</span>
                 </div>
             );
@@ -245,23 +245,23 @@ class WhichCountryBigger extends Component {
             default:
             case this.gameStates.GUESSING:
                 return (
-                    <div className={utils.el(this.block, 'separator')}>
-                        <div className={utils.el(this.block, 'separator-content')}>
+                    <div className={b.el('separator')}>
+                        <div className={b.el('separator-content')}>
                             {renderProgressCircle()}
                         </div>
                     </div>
                 );
             case this.gameStates.ADVANCING:
                 return (
-                    <div className={utils.el(this.block, 'separator')}>
-                        <div className={utils.el(this.block, 'separator-content')}>
-                            <div className={utils.el(this.block, 'separator-content-upper')}>
+                    <div className={b.el('separator')}>
+                        <div className={b.el('separator-content')}>
+                            <div className={b.el('separator-content-upper')}>
                                 <h1>Correct!</h1>
                                 <span>{cca2CountryMap[this.state.comparison.largerCountry].name.common} is {this.state.comparison.areaDiff.toLocaleString()} km&#178; larger than {cca2CountryMap[this.state.comparison.smallerCountry].name.common}.</span>
                             </div>
-                            <div className={"xyz spin circle spin--cunt"}>Spin Circle</div>
+                            <div className={"xyz spin circle spin--foo"}>Spin Circle</div>
                             {renderProgressCircle()}
-                            <div className={utils.el(this.block, 'separator-content-lower')}>
+                            <div className={b.el(this.b, 'separator-content-lower')}>
                                 <button onClick={() => this.setGameState(this.gameStates.GUESSING)}>Continue</button>
                             </div>
                         </div>
@@ -280,14 +280,14 @@ class WhichCountryBigger extends Component {
         //     .then(state => console.log(state));
 
         return (
-            <div className={classNames(this.block, utils.mod(this.block, this.state.gameState.class))}>
-                <div className={classNames(utils.el(this.block, 'side'), utils.elMod(this.block, 'side', 'left'), {[utils.elMod(this.block, 'side', 'correct')] : this.state.gameState === this.gameStates.ADVANCING && this.isCountryCorrect(this.state.leftCountry)})}
+            <div className={b.mod(this.state.gameState.class)}>
+                <div className={b.el('side').mod('left')}
                      onMouseDown={() => { this.submitAnswer(this.state.leftCountry) }}
                 >
                     {cca2CountryMap[this.state.leftCountry].name.common}
                 </div>
                 { this.renderCentre() /* Game state sensitive. */ }
-                <div className={classNames(utils.el(this.block, 'side'), utils.elMod(this.block, 'side', 'right'), {[utils.elMod(this.block, 'side', 'correct')] : this.state.gameState === this.gameStates.ADVANCING && this.isCountryCorrect(this.state.rightCountry)})}
+                <div className={b.el('side').mod('right')}
                      onMouseDown={() => { this.submitAnswer(this.state.rightCountry) }}
                 >
                     {cca2CountryMap[this.state.rightCountry].name.common}
