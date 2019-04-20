@@ -1,19 +1,19 @@
+// External
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ReactSVG from 'react-svg'
 import svgPanZoom from 'svg-pan-zoom';
 import countries from 'world-countries';
-
+// Helpers / Constants
 import scssVariables from '../../scss/_variables.scss';
+import b from '../includes/Bem';
 import utils from '../utils/utils';
-
+// Images
+import mapSvg from '../../images/world-map.svg';
 // Components
 import Loading from './Loading';
 import OnlyRenderOnce from './OnlyRenderOnce'
-
-// Images
-import mapSvg from '../../images/world-map.svg';
 import CountryInfo from './CountryInfo';
 
 class Map extends Component {
@@ -25,7 +25,7 @@ class Map extends Component {
             activeCountryInfoMouseEvent: null,
         };
 
-        this.rootClass = 'map';
+        this.b = b('map');
 
         this.cca2CountryInfoMap = {};
         for (const country of countries) {
@@ -225,9 +225,11 @@ class Map extends Component {
     };
 
     render() {
+        const b = this.b;
+
         return (
             <div
-                className={classNames(this.rootClass, this.props.extraClassName)}
+                className={classNames(b.toString(), this.props.extraClassName)}
                 ref={this.parentDiv}
             >
                 {this.state.activeCountryInfo ?
@@ -237,8 +239,8 @@ class Map extends Component {
                     : ''
                 }
                 <OnlyRenderOnce ComponentToRender={ReactSVG}
-                                className={utils.el(this.rootClass, 'svg-wrapper')}
-                                svgClassName={utils.el(this.rootClass, 'svg')}
+                                className={b.el('svg-wrapper')}
+                                svgClassName={b.el('svg').toString()}
                                 src={mapSvg}
                                 fallback={() => <span>Oops! Failed to load the map. Sorry.</span>}
                                 loading={() => {

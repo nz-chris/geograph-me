@@ -1,4 +1,4 @@
-$home-page-background-color: $color-mine-shaft;
+$home-page-background: $color-mine-shaft;
 $game-link-height: 200px;
 $game-link-margin: $padding;
 
@@ -19,7 +19,7 @@ $game-link-margin: $padding;
 
     &__body {
         flex-grow: 1;
-        background: $home-page-background-color;
+        background: $home-page-background;
     }
 
     &__game-nav {
@@ -37,7 +37,7 @@ $game-link-margin: $padding;
         line-height: $game-link-height;
         text-align: center;
         background: $color-alto;
-        border-bottom: 0 $home-page-background-color solid; // To transition back to.
+        border-bottom: 0 $home-page-background solid; // To transition back to.
         border-radius: $border-radius-subtle;
         transition: $transition-all-faster;
 

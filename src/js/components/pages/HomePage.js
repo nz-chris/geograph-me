@@ -1,12 +1,21 @@
+// External
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import b from '../../includes/Bem'
+// Internal helpers.
+import b from '../../includes/Bem';
 
-import {siteInfo, orderedGamePages} from '../../siteConfig';
+import {orderedGamePages, siteInfo} from '../../siteConfig';
 
 class HomePage extends Component {
+    constructor(props) {
+        super(props);
+
+        this.b = b('home-page');
+    }
+
     render() {
-        const b = b('home-page');
+        const b = this.b;
+
         return (
             <div className={b}>
                 <div className={b.el('heading')}>

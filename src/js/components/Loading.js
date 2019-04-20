@@ -1,7 +1,7 @@
+// External
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
-import utils from '../utils/utils'
+// Helpers / Constants
 import b from '../includes/Bem'
 
 class Loading extends Component {
@@ -24,12 +24,13 @@ class Loading extends Component {
     }
 
     render() {
+        const b = this.b;
         return (
-            <div className={this.b}
+            <div className={b}
                  style={this.props.style}
                  ref={this.ref}
             >
-                <div className={utils.el(this.b, 'ring')}>
+                <div className={b.el('ring')}>
                     <div />
                     <div />
                     <div />

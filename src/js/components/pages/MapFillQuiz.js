@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+// External
+import React, {Component} from 'react';
 import countries from 'world-countries';
-
+// Helpers / Constants
 import b from '../../includes/Bem'
+// Data
 import commonNonIndependents from '../../../data/common-non-independents';
-
 // Components
 import QuizInput from '../QuizInput';
 import SelectiveMap from '../SelectiveMap';
@@ -95,7 +96,7 @@ class MapFillQuiz extends Component {
                             Object.values(this.placeNames).filter(value => !!value).length
                         }
                     </div>
-                    <Notifiable extraClassName={b.el('country-input')}
+                    <Notifiable extraClassName={b.el('country-input').toString()}
                                 message={this.state.underInputNotification}
                     >
                         <QuizInput placeholder={'Enter a country name'}

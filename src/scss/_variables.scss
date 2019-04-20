@@ -30,19 +30,22 @@ $z-higher: 500;
 $z-high: 400;
 $z-medium-high: 300;
 $z-medium: 200;
-$z-low-medium: 100;
+$z-medium-low: 100;
+$z-one: 1;
 $z-low: 0;
 $z-bottom: -100;
 
 // Animations
+$transition-time: 0.3s;
 $transition-fast-no-ease: 0.1s;
 $transition-slower: 0.5s ease-in-out;
-$transition: 0.3s ease-in-out;
+$transition: $transition-time ease-in-out;
 $transition-faster: 0.15s ease-in-out;
 $transition-all-fast-no-ease: all $transition-fast-no-ease;
 $transition-all-slower: all $transition-slower;
 $transition-all: all $transition;
 $transition-all-faster: all $transition-faster;
+$ease-in-back: cubic-bezier(0.6, -0.28, 0.735, 0.045);
 
 // SVG
 $stroke-width: 0.8;

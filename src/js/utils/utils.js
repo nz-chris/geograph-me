@@ -24,17 +24,6 @@ export default {
         return !!Math.floor(Math.random() * 2);
     },
 
-    // BEM convention convenience functions.
-    el(block, element) {
-        return block + '__' + element;
-    },
-    mod(block, modifier) {
-        return block + '--' + modifier;
-    },
-    elMod(block, element, modifier) {
-        return this.mod(this.el(block, element), modifier)
-    },
-
     // json generation. Run these functions to update certain json filed in the /src/data directory.
     // For example, if `world-countries` package is updated.
     // json is logged to console.
@@ -102,7 +91,7 @@ export default {
         // We will limit the pairings to avoid extremities.
         // Easiness such as Russia vs. Vatican City is avoided later.
         // Extreme difficulty such as Tuvalu vs. Nauru is avoided in the below map construction,
-        // which will ignore island nations roughly smaller than 9,000 sq km
+        // which will ignore island nations smaller than 9,000 sq km
         // (Cyprus is the smallest island nation included).
 
         // First, map `cca2_1,cca2_2` string keys to the difference in their areas.

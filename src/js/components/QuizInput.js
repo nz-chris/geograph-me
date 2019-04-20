@@ -1,19 +1,24 @@
+// External
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+// Helpers / Constants
+import b from '../includes/Bem';
 
 class QuizInput extends Component {
     constructor(props) {
         super(props);
 
-        this.rootClass = 'quiz-input';
+        this.b = b('quiz-input');
 
         this.inputRef = null;
     }
 
     render() {
+        const b = this.b;
+
         return (
-            <input className={classNames(this.rootClass, this.props.extraClassName)}
+            <input className={classNames(b.toString(), this.props.extraClassName)}
                    type={'text'}
                    placeholder={this.props.placeholder}
                    ref={(ref) => {

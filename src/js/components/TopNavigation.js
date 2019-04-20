@@ -1,23 +1,29 @@
+// External
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import classNames from 'classnames';
-
-import utils from '../utils/utils'
+// Helpers / Constants
 import {orderedTopNavigationPages} from '../siteConfig';
+import b from '../includes/Bem';
 
 class TopNavigation extends Component {
+    constructor(props) {
+        super(props);
+
+        this.b = b('top-navigation');
+    }
+
     render() {
-        const rootClass = 'top-navigation';
+        const b = this.b;
         return (
-            <header className={rootClass}>
+            <header className={b}>
                 {(() => {
                     const links = [];
                     for (let i = 0; i < Object.keys(orderedTopNavigationPages).length; i++) {
                         const page = orderedTopNavigationPages[i];
                         links.push(
                             <Link to={page.path}
-                                  className={classNames(utils.el(rootClass, 'link'), {[utils.elMod(rootClass, 'link', 'active')]: this.props.location.pathname === page.path})}
+                                  className={b.el('link').modIf('active', this.props.location.pathname === page.path)}
                                   key={i}
                             >
                                 {page.name}

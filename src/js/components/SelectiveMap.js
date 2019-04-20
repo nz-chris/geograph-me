@@ -1,10 +1,11 @@
+// External
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
-import countryIdTitleMap from '../../data/country-id-title-map';
+// Helpers / Constants
 import scssVariables from '../../scss/_variables.scss';
-import utils from '../utils/utils'
-
+import b from '../includes/Bem';
+// Data
+import countryIdTitleMap from '../../data/country-id-title-map';
 // Components
 import Map from './Map';
 
@@ -12,8 +13,8 @@ class SelectiveMap extends Component {
     constructor(props) {
         super(props);
 
-        this.rootClass = 'selective-map';
-        this.invisibleClass = utils.elMod(this.rootClass, 'land', 'invisible');
+        this.b = b('selective-map');
+        this.invisibleClass = this.b.el('land').mod('invisible');
 
         this.svg = null;
         this.lastCountriesShown = this.props.countriesShown.slice();
@@ -43,6 +44,8 @@ class SelectiveMap extends Component {
     initClasses = () => {
         if (!this.svg) return;
 
+        const b = this.b;
+
         const lowerCaseCountriesShown = this.props.countriesShown.map((item) => {
             return item.toLowerCase();
         });
@@ -50,7 +53,7 @@ class SelectiveMap extends Component {
         for (const id of Object.keys(countryIdTitleMap)) {
             const node = this.svg.querySelector(`#${id}`);
             if (node) {
-                node.classList.add(utils.el(this.rootClass, 'land'), this.invisibleClass);
+                node.classList.add(b.el('land').toString(), ...this.invisibleClass.toArrayOfStrings());
                 landNodes.push(node);
                 if (lowerCaseCountriesShown.includes(id.toLowerCase())) {
                     node.classList.remove(this.invisibleClass);
@@ -68,8 +71,10 @@ class SelectiveMap extends Component {
     };
 
     render() {
+        const b = this.b;
+
         return (
-            <Map extraClassName={this.rootClass}
+            <Map extraClassName={b.toString()}
                  svgCallback={(svg) => {
                      if (!this.svg) {
                          this.svg = svg;

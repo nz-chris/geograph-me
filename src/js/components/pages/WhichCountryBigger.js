@@ -1,8 +1,10 @@
+// External
 import React, {Component} from 'react';
+// Helpers / Constants
 import utils from '../../utils/utils';
 import Enumeration from '../../includes/Enumeration';
 import b from '../../includes/Bem';
-
+// Data
 import countryAreaComparisonList from '../../../data/country-area-comparison-list-descending';
 import cca2CountryMap from '../../../data/cca2-country-map';
 
@@ -124,7 +126,7 @@ class WhichCountryBigger extends Component {
         const nextTen = [];
         for (const comparison of this.countryAreaComparisonList) {
             const difficultyIncrease = this.getDifficultyIncrease(comparison);
-            if (difficultyIncrease < 1.8 && difficultyIncrease > 0.8) {
+            if (difficultyIncrease < 2.5 && difficultyIncrease > 1.5) {
                 if (keptCountryWinsAgain) {
                     if (comparison.largerCountry === keptCountry && !this.isCountryHidden(comparison.smallerCountry)) {
                         nextTen.push(comparison);
@@ -235,9 +237,10 @@ class WhichCountryBigger extends Component {
         const b = this.b;
 
         const renderProgressCircle = () => {
+            // A key is needed for the progress circle, to ensure that any css transitions are honoured.
             return (
-                <div className={b(this.b).el('progress-circle')}>
-                    <span>{this.state.progress}</span>
+                <div key="progress-circle" className={b.el('progress-circle')}>
+                    <span className={b.el('progress-circle-number')}>{this.state.progress}</span>
                 </div>
             );
         };
@@ -257,11 +260,10 @@ class WhichCountryBigger extends Component {
                         <div className={b.el('separator-content')}>
                             <div className={b.el('separator-content-upper')}>
                                 <h1>Correct!</h1>
-                                <span>{cca2CountryMap[this.state.comparison.largerCountry].name.common} is {this.state.comparison.areaDiff.toLocaleString()} km&#178; larger than {cca2CountryMap[this.state.comparison.smallerCountry].name.common}.</span>
+                                <span>{cca2CountryMap[this.state.comparison.largerCountry].name.common} is<h2 style={{margin: 0}}>{this.state.comparison.areaDiff.toLocaleString()} km&#178;</h2>larger than {cca2CountryMap[this.state.comparison.smallerCountry].name.common}.</span>
                             </div>
-                            <div className={"xyz spin circle spin--foo"}>Spin Circle</div>
                             {renderProgressCircle()}
-                            <div className={b.el(this.b, 'separator-content-lower')}>
+                            <div className={b.el('separator-content-lower')}>
                                 <button onClick={() => this.setGameState(this.gameStates.GUESSING)}>Continue</button>
                             </div>
                         </div>
@@ -271,9 +273,9 @@ class WhichCountryBigger extends Component {
     }
 
     render() {
-        if (!this.state.comparison) {
-            return null;
-        }
+        if (!this.state.comparison) return null;
+
+        const b = this.b;
 
         // fetch(`/api/greeting`)
         //     .then(response => response.json())

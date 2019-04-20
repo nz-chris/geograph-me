@@ -1,14 +1,21 @@
+// External
 import React, {Component} from 'react';
 import FlagIcon from './FlagIcon'
 import currencies from 'currency-codes'
 import PropTypes from 'prop-types';
-import b from '../includes/Bem'
-import getSymbolFromCurrency from 'currency-symbol-map'
-
+import getSymbolFromCurrency from 'currency-symbol-map';
+// Helpers / Constants
+import b from '../includes/Bem';
 
 class CountryInfo extends Component {
+    constructor(props) {
+        super(props);
+
+        this.b = b('country-info');
+    }
+
     render() {
-        const b = b('country-info');
+        const b = this.b;
         const country = this.props.country;
         return (
             <div className={b}
@@ -29,7 +36,7 @@ class CountryInfo extends Component {
                      return style;
                  })()}
             >
-                <span><strong>{country.name.common}</strong>&nbsp;&nbsp;&nbsp;&nbsp;<FlagIcon code={country.cca2.toLowerCase()} size={'lg'} /></span><br /><br />
+                <span><strong>{country.name.common}</strong>&emsp;;<FlagIcon code={country.cca2.toLowerCase()} size={'lg'} /></span><br /><br />
                 <span><strong>Official name:</strong> {country.name.official}</span><br />
                 <span><strong>Capital:</strong> {country.capital}</span><br />
                 {(() => {

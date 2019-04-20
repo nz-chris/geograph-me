@@ -1,10 +1,12 @@
+// External
 import React, {Component} from 'react'
 import {BrowserRouter as Router, Route, withRouter} from 'react-router-dom'
-
-import '../scss/Main.scss';
+// Helpers / Constants
 import {pages} from './siteConfig';
 // Components
 import TopNavigation from './components/TopNavigation';
+// Link the styles!
+import '../scss/Main.scss';
 
 let TopNavigationWithRouter = withRouter(TopNavigation);
 

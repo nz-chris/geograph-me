@@ -8,6 +8,10 @@ class Bem {
         return this.c;
     }
 
+    toArrayOfStrings() {
+        return this.c.split(' ');
+    }
+
     static argCheck(arg) {
         const isOk = (arg) => {
             if (!arg) return false;
