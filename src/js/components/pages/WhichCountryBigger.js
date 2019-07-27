@@ -277,10 +277,6 @@ class WhichCountryBigger extends Component {
 
         const b = this.b;
 
-        // fetch(`/api/greeting`)
-        //     .then(response => response.json())
-        //     .then(state => console.log(state));
-
         return (
             <div className={b.mod(this.state.gameState.class)}>
                 <div className={b.el('side').mod('left')}

@@ -16,9 +16,19 @@ class TopNavigation extends Component {
     render() {
         const b = this.b;
         return (
-            <header className={b}>
+            <header className={b}
+                    onClick={() => {
+                        //LOAD GEO JSON!
+                        fetch(`/api/data`)
+                            .then(response => {
+                                console.log(response);
+                                return response.json();
+                            })
+                            .then(state => console.log(state));
+                    }}>
                 {(() => {
                     const links = [];
+                    // bru wtf why doesnt this use map.
                     for (let i = 0; i < Object.keys(orderedTopNavigationPages).length; i++) {
                         const page = orderedTopNavigationPages[i];
                         links.push(

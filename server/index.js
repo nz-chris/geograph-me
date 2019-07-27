@@ -12,6 +12,14 @@ app.get('/api/greeting', (req, res) => {
     res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
 });
 
-app.listen(3001, () =>
-    console.log('Express server is running on localhost:3001')
+app.get('/api/data', (req, res) => {
+    const letter = req.query.letter;
+    res.setHeader('Content-Type', 'application/json');
+    const data = require('./data.json');
+    const toSend = letter ? data[letter] : data;
+    res.send(JSON.stringify(toSend));
+});
+
+app.listen(3002, () =>
+    console.log('Express server is running on localhost:3002')
 );

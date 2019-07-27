@@ -4,10 +4,10 @@
 
     &__land {
         &--invisible {
-            pointer-events: none;
+            //pointer-events: none;
 
             #{$land-selector} {
-                opacity: 0;
+                opacity: 1;
             }
         }
     }

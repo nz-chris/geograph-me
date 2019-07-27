@@ -27,14 +27,22 @@ class SelectiveMap extends Component {
             newCountry = newCountry.toLowerCase();
             const node = this.svg.querySelector(`#${newCountry}`);
             if (node) {
-                node.classList.remove(this.invisibleClass);
+                try {
+                    node.classList.remove(this.invisibleClass);
+                } catch {
+
+                }
             }
         }
         for (let newCountryHidden of newCountriesHidden) {
             newCountryHidden = newCountryHidden.toLowerCase();
             const node = this.svg.querySelector(`#${newCountryHidden}`);
             if (node) {
-                node.classList.add(this.invisibleClass);
+                try {
+                    node.classList.add(this.invisibleClass);
+                } catch {
+
+                }
             }
         }
         this.lastCountriesShown = nextProps.countriesShown.slice();
@@ -56,7 +64,11 @@ class SelectiveMap extends Component {
                 node.classList.add(b.el('land').toString(), ...this.invisibleClass.toArrayOfStrings());
                 landNodes.push(node);
                 if (lowerCaseCountriesShown.includes(id.toLowerCase())) {
-                    node.classList.remove(this.invisibleClass);
+                    try {
+                        node.classList.remove(this.invisibleClass);
+                    } catch {
+
+                    }
                 }
             }
         }
