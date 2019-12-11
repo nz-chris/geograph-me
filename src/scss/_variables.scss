@@ -1,15 +1,18 @@
+@import "./includes/colors";
+
 // Colors
 //// Named
 $color-froly: #f47174;
-$color-cerulean-blue: #2866b1;
 $color-cod-grey: #0f0f0f;
 $color-mine-shaft: #202020;
 $color-tundora: #383838;
 $color-nobel: #b7b7b7;
 $color-alto: #ddd;
+
+$color-pickled-bluewood: #2b4056;
+$color-ebony-clay: #212c37;
 //// Purpose
-$color-text: $color-alto;
-$color-box-shadow: black;
+$color-text: $color-gallery;
 $color-negative-button: $color-froly;
 $color-ocean: $color-cerulean-blue;
 
@@ -19,10 +22,12 @@ $padding: 15px;
 $padding-slimmer: 10px;
 
 // Cosmetics
-$box-shadow: 2px 2px 8px $color-box-shadow;
+$box-shadow: 2px 3px 5px rgba(black, 0.2);
+$box-shadow-tighter: 2px 3px 3px rgba(black, 0.55);
 $border-radius: 18px;
 $border-radius-subtle: 4px;
 $hover-lighten-darken-amount: 7;
+$focus-outline: 2px $color-focus-outline solid;
 
 // Z Index
 $z-top: 90000;

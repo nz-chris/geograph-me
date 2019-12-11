@@ -1,7 +1,20 @@
+//todo import entire directories using index files.
+
 // Variables
+@import './includes/colors';
 @import 'variables';
 
+// Other
+@import 'layout/breakpoints';
+@import 'includes/globalInclude';
+@import 'layout/containers';
+@import 'includes/button';
+@import 'includes/tooltip';
+@import 'includes/typography';
+
 // React Components
+@import 'components/simple-ui/Input';
+@import 'components/simple-ui/Button';
 @import 'components/pages/HomePage';
 @import 'components/pages/MapFillQuiz';
 @import 'components/pages/WhichCountryBigger';
@@ -12,8 +25,3 @@
 @import 'components/QuizInput';
 @import 'components/SelectiveMap';
 @import 'components/TopNavigation';
-
-// Other
-@import 'includes/globalInclude';
-@import 'includes/button';
-@import 'includes/tooltip';

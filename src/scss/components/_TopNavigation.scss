@@ -1,5 +1,4 @@
-$color-top-navigation-background: $color-tundora;
-$top-navigation-height: $min-interactive;
+$top-navigation-height: 44px;
 $border-width: 2px;
 
 .top-navigation {
@@ -8,7 +7,7 @@ $border-width: 2px;
     padding: 0 $padding;
     display: flex;
     align-items: center;
-    background: $color-top-navigation-background;
+    background: $color-top-navigation;
 
     &__link {
         height: $top-navigation-height;
@@ -29,7 +28,7 @@ $border-width: 2px;
         }
 
         &:hover:not(&--active) {
-            background: lighten($color-top-navigation-background, $hover-lighten-darken-amount);
+            background: lighten($color-top-navigation, $hover-lighten-darken-amount);
         }
 
         // Well, that's confusing.

@@ -16,13 +16,14 @@ class Bem {
         const isOk = (arg) => {
             if (!arg) return false;
             if (typeof arg !== 'string') return false;
-            if (!/^[a-z-]+$/.test(arg)) return false;
+            if (!/^[a-z0-9-]+$/.test(arg)) return false;
+            if (/__/.test(arg)) return false;
             if (/--/.test(arg)) return false;
-            if (!/[a-z]/.test(arg.charAt(0)) || !/[a-z]/.test(arg.charAt(arg.length - 1))) return false;
+            if (/^[_-]/.test(arg) || /[_-]$/.test(arg)) return false;
             return true;
         };
         if (!isOk(arg)) {
-            throw new Error(`Invalid Bem argument: \`${arg}\`. Argument must only contain lowercase letters, and non-consecutive dashes, and must not begin or end with a dash.`);
+            throw new Error(`Invalid Bem argument: \`${arg}\`. Argument must only contain lowercase letters, digits, non-consecutive underscores, non-consecutive dashes, and must not begin or end with an underscore or dash.`);
         }
     }
 
@@ -68,5 +69,12 @@ class Bem {
     }
 }
 
-const b = (block) => { Bem.argCheck(block); return new Bem(block) };
-export default b;
+const bem = block => {
+    if (/^[0-9]/.test(block)) {
+        throw new Error(`Invalid Bem block: \`${block}\`. Block must not start with a digit.`);
+    }
+    Bem.argCheck(block);
+    return new Bem(block);
+};
+
+export default bem;

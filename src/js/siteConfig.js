@@ -1,6 +1,8 @@
 import HomePage from './components/pages/HomePage';
 import MapFillQuiz from './components/pages/MapFillQuiz';
 import WhichCountryBigger from './components/pages/WhichCountryBigger';
+import New from './components/pages/New';
+import TagsInputDemo from './components/tags/TagsInputDemo';
 
 export const siteInfo = {
     NAME: 'Geograph.me',
@@ -11,6 +13,8 @@ export const pages = {
     HOME: {path: '/', name: 'Home', component: HomePage},
     MAP_FILL_QUIZ: {path: '/map-fill-quiz', name: 'Map Fill Quiz', component: MapFillQuiz},
     WHICH_COUNTRY_BIGGER: {path: '/which-country-bigger', name: 'Country Size Quiz', component: WhichCountryBigger},
+    NEW: {path: '/new', name: 'New', component: New},
+    TAGS: {path: '/tags', name: 'Tags', component: TagsInputDemo},
 };
 
 export const orderedTopNavigationPages = {

@@ -1,0 +1,115 @@
+.gm-input {
+    $this: &;
+    $height: 2.5em;
+    $horizontal-padding: 1em;
+    position: relative;
+    font-size: 1.25em;
+    color: $color-input-text;
+
+    &__label {
+        display: block;
+        cursor: text;
+
+        &:hover:not(:focus-within) {
+            #{$this}__input {
+                padding-left: 1.1em;
+            }
+        }
+
+        &:focus-within {
+            #{$this}__label-text {
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    height: 2px;
+                    animation: bla 1s ease-in-out infinite;
+                }
+
+                @keyframes bla {
+                    0% {
+                        background-color: cyan;
+                    }
+                    50% {
+                        background-color: hotpink;
+                    }
+                    100% {
+                        background-color: cyan;
+                    }
+                }
+            }
+        }
+    }
+
+    &__label-text {
+        position: absolute;
+        top: -1.075ex;
+        left: 0.6em;
+        line-height: 1;
+    }
+
+    &__input {
+        height: $height;
+        padding: 0 $horizontal-padding;
+        font-size: 1em;
+        color: $color-input-text;
+        background: $color-input;
+        border: 0;
+        border-radius: 4px;
+        box-shadow: $box-shadow;
+        transition: $transition-faster;
+        transition-property: padding, color;
+
+        //temp. move into --full-width modifier.,
+        width: 100%;
+
+        &:focus {
+            outline: $focus-outline;
+            outline-offset: 2px;
+        }
+    }
+
+    &__clear {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $horizontal-padding;
+        height: 100%;
+        background: rgba(black, 0.15);
+        cursor: pointer;
+
+        &:hover {
+            &::before,
+            &::after {
+                height: 40%;
+            }
+
+            + #{$this}__label #{$this}__input {
+                color: rgba($color-input-text, 0.5);
+            }
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 25%;
+            background: $color-petite-orchid;
+            transition: $transition-faster;
+            transition-property: height;
+        }
+
+        &::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    }
+}

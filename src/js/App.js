@@ -6,7 +6,7 @@ import {pages} from './siteConfig';
 // Components
 import TopNavigation from './components/TopNavigation';
 // Link the styles!
-import '../scss/Main.scss';
+import '../scss/main.scss';
 
 let TopNavigationWithRouter = withRouter(TopNavigation);
 

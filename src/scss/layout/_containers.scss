@@ -1,0 +1,10 @@
+.container {
+    width: 33%;
+}
+
+.narrow-container {
+    @include media-breakpoint-up(xs) {
+        width: 600px;
+        margin: 24px auto 0;
+    }
+}
